@@ -15,8 +15,8 @@ function setup() {
     var loc = createVector(random(width * 1.2), random(height), 2);
     var angle = 0; //any value to initialize
     var dir = createVector(cos(angle), sin(angle));
-    // var speed = random(0.5,2);
-    var speed = random(5, map(mouseX, 0, width, 5, 20)); // faster
+    var speed = random(0.1, 0.5);
+    //var speed = random(5, map(mouseX, 0, width, 5, 20)); // faster
     particles[i] = new Particle(loc, dir, speed);
   }
 }
@@ -24,7 +24,8 @@ function setup() {
 function draw() {
   // background(0);
   fill(0, 10);
-  rect(0, 0, width, height);
+  //rect(255, 192, 203);
+  //rect(255, 192, width, height);
   for (let i = 0; i < particles.length; i++) {
     particles[i].run();
   }
@@ -58,7 +59,7 @@ class Particle {
     this.dir.x = sin(angle);
     this.dir.y = tan(angle);
     var vel = this.dir.copy();
-    var d = 22; //direction change
+    var d = mouseX / mouseY; //direction change
     vel.mult(this.speed * d); //vel = vel * (speed*d)
     this.loc.add(vel); //loc = loc + vel
   }
@@ -74,7 +75,7 @@ class Particle {
     }
   }
   update() {
-    fill(255, 200, 255);
+    fill(50, 0, 255);
     ellipse(this.loc.x, this.loc.y, this.loc.z);
   }
 }

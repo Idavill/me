@@ -5,7 +5,7 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
-<!--     <link rel="stylesheet" type="text/css" href="assets/sketch/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/sketch/style.css' | relative_url }}">
     <meta charset="utf-8" />
   </head>  
   <body>
@@ -13,7 +13,7 @@
     
     <main class="page-content" aria-label="Content">
       <div class="script">
-        <script src="./assets/sketch/sketch.js"></script>
+        <script src="{{ '/assets/sketch/sketch.js' | relative_url }}"></script>
       </div>
       <div class="wrapper">
         {{ content }}
