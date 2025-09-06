@@ -29,7 +29,13 @@ baseurl: "/me"
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
 github_username: idavill
-
+header_pages:
+  - index.md
+  - projects.html
+collections:
+  projects:
+    output: true
+#
 # Build settings
 theme: minima
 plugins:
