@@ -2,12 +2,19 @@
 <html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
   {%- include head.html -%}
-
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
+<!--     <link rel="stylesheet" type="text/css" href="assets/sketch/style.css"> -->
+    <meta charset="utf-8" />
+  </head>  
   <body>
-
     {%- include header.html -%}
-
+    
     <main class="page-content" aria-label="Content">
+      <div class="script">
+        <script src="./assets/sketch/sketch.js"></script>
+      </div>
       <div class="wrapper">
         {{ content }}
       </div>
