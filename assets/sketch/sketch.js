@@ -11,13 +11,19 @@ let img2;
 let img3;
 let imageMap = new Map();
 let currentImage = null;
+let currentGraphics = null;
+let shape;
+let canvas;
+let canvas3D;
+let time = 0;
 
 function preload() {
   img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
-  img2 = loadImage("assets/images/urbanf1.png", handleImage, handleError);
+  img2 = loadImage("assets/images/sentinel.gif", handleImage, handleError);
   img3 = loadImage("assets/images/ideadots.png", handleImage, handleError);
   img4 = loadImage("assets/images/vr.png", handleImage, handleError);
-  img5 = loadImage("assets/images/idea1.png", handleImage, handleError);
+  img5 = loadImage("assets/images/hemp.jpg", handleImage, handleError);
+  shape = loadModel("assets/models/flat.obj");
 }
 
 function handleImage(img) {
@@ -37,9 +43,14 @@ function setup() {
   imageMap.set("/jekyll/update/2025/09/06/hemp", img5);
 
   let pageHeight = select("body").height;
-  let canvas = createCanvas(windowWidth, pageHeight);
+
+  canvas = createCanvas(windowWidth, pageHeight);
+  //canvas3D = createCanvas(windowWidth - 100, pageHeight - 100, WEBGL);
   canvas.position(0, 0);
+  //canvas3D.position(0, 0);
   canvas.style("z-index", "-1");
+  //canvas3D.style("z-index", "-2");
+
   noStroke();
   for (let i = 0; i < num; i++) {
     var loc = createVector(random(width * 1.2), random(height), 2);
@@ -51,13 +62,28 @@ function setup() {
 }
 
 function draw() {
+  time += 1;
   fill(0, 10);
   for (let i = 0; i < particles.length; i++) {
     particles[i].run();
   }
-
+  if (currentGraphics) {
+    pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
+    pg.background(100);
+    pg.lights();
+    pg.noStroke();
+    pg.rotateX(QUARTER_PI + time / 100);
+    pg.rotateY(QUARTER_PI + time / 100);
+    pg.torus(15, 5);
+    image(
+      pg,
+      windowWidth - previewPosition,
+      windowHeight - previewPosition,
+      previewImageSize,
+      previewImageSize
+    );
+  }
   if (currentImage) {
-    //imageMode(CENTER);
     image(
       currentImage,
       windowWidth - previewPosition,
@@ -74,14 +100,13 @@ function windowResized() {
 
 drawRandomCircle = function (titleid) {
   let path = imageMap.get(titleid);
-  currentImage = path;
-  // image(
-  //   path,
-  //   windowWidth - previewPosition,
-  //   windowHeight - previewPosition,
-  //   previewImageSize,
-  //   previewImageSize
-  // );
+  if (titleid === "/jekyll/update/2025/09/06/ideadots") {
+    currentGraphics = path;
+    currentImage = null;
+  } else {
+    currentImage = path;
+    currentGraphics = null;
+  }
 };
 
 class Particle {
