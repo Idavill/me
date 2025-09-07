@@ -1,10 +1,12 @@
 ---
 layout: post
-title: "Hemp in Northern Jutland"
+title: "Flax in Northern Jutland"
 date: 2025-09-06 16:58:44 +0200
 categories: jekyll update
 ---
 
-`Research Project to investigate the joruney of hemp through the baltics to northern Jutland in order to investigate the textile production in the area. This involves looking at shipping data spanning from 1650-1800, cleaning data and creating meaningful data visualisation of the relationship between textile import and its historical context`
+`Research Project: Tracing the Flax Trade from the Baltics to Northern Jutland (1650–1800)`
 
-`Further description coming soon`
+`This project explores the historical journey of flax as a key commodity in textile production, focusing on its movement from the Baltic region to northern Jutland. By analyzing shipping records from 1650 to 1800, we aim to uncover patterns of trade, assess the scale and significance of textile imports, and situate these findings within their broader historical and economic context. The research will involve meticulous data cleaning and the development of insightful visualizations to illuminate the connections between maritime trade and regional textile manufacturing.`
+
+`Full project description coming soon.`
