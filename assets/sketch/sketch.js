@@ -47,8 +47,8 @@ function sketch1(p) {
   };
 }
 
-// Run first p5 instance
-new p5(sketch1);
+// // Run first p5 instance
+// new p5(sketch1);
 
 function preload() {
   img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
