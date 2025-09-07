@@ -3,16 +3,20 @@ var noiseScale = 100,
   noiseStrength = 1;
 var particles = [num];
 var rectangle;
+let previewImageSize = 400;
+let previewBuffer = 100;
+let previewPosition = previewImageSize + previewBuffer;
 let img1;
 let img2;
 let img3;
+let imageMap = new Map();
 
-let one = "/jekyll/update/2025/09/06/meditations";
-let two = "/jekyll/update/2025/09/06/urban";
+let meditation = "/jekyll/update/2025/09/06/meditations";
+let urban = "/jekyll/update/2025/09/06/urban";
 
 function preload() {
   //mg1 = loadImage("assets/images/mm.gif");
-  //img2 = loadImage("assets/images/urbanf1.png");
+  img2 = loadImage("assets/images/urbanf1.png");
   img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
   //img3 = loadImage("../images/vr.png");
 }
@@ -26,6 +30,10 @@ function handleError(event) {
 
 function setup() {
   describe("purple sand particles mimicking water flow");
+
+  imageMap.set(urban, img2);
+  imageMap.set(meditation, img1);
+
   let pageHeight = select("body").height;
   let canvas = createCanvas(windowWidth, pageHeight);
   canvas.position(0, 0);
@@ -51,13 +59,34 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-drawRandomCircle = function (param) {
-  if (param === one) {
-    //console.log("halløj", param, one);
-    image(img1, windowWidth - 550, windowHeight - 550, 500, 500);
-  } else if (param == two) {
-    image(img2, windowWidth - 550, windowHeight - 550, 500, 500);
-  }
+drawRandomCircle = function (titleid) {
+  let path = imageMap.get(titleid);
+  console.log("path : ", path, titleid);
+  image(
+    path,
+    windowWidth - previewPosition,
+    windowHeight - previewPosition,
+    previewImageSize,
+    previewImageSize
+  );
+
+  // if (param === meditation) {
+  //   image(
+  //     img1,
+  //     windowWidth - previewPosition,
+  //     windowHeight - previewPosition,
+  //     previewImageSize,
+  //     previewImageSize
+  //   );
+  // } else if (param == urban) {
+  //   image(
+  //     img2,
+  //     windowWidth - previewPosition,
+  //     windowHeight - previewImageSize + previewBuffer,
+  //     previewImageSize,
+  //     previewImageSize
+  //   );
+  // }
 };
 
 class Particle {
