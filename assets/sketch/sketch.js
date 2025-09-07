@@ -53,11 +53,11 @@ let down;
 // new p5(sketch1);
 
 function preload() {
-  img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
-  img2 = loadImage("assets/images/sentinel.gif", handleImage, handleError);
-  img3 = loadImage("assets/images/ideadots.png", handleImage, handleError);
-  img4 = loadImage("assets/images/fauna2.gif", handleImage, handleError);
-  img5 = loadImage("assets/images/flax2.png", handleImage, handleError);
+  img1 = loadImage("/me/assets/images/mm.gif", handleImage, handleError);
+  img2 = loadImage("/me/assets/images/sentinel.gif", handleImage, handleError);
+  img3 = loadImage("/me/assets/images/ideadots.png", handleImage, handleError);
+  img4 = loadImage("/me/assets/images/fauna2.gif", handleImage, handleError);
+  img5 = loadImage("/me/assets/images/flax2.png", handleImage, handleError);
   //shape = loadModel("assets/models/flat.obj");
 }
 function handleImage(img) {
