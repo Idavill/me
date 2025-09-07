@@ -64,23 +64,9 @@ function draw() {
     particles[i].run();
   }
   if (currentGraphics) {
-    pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
-    pg.background(255, 192, 203);
-    let c = color("orchid");
-    pg.ambientLight(c);
-    pg.noStroke();
-    pg.rotateX(QUARTER_PI + time / 100);
-    pg.rotateY(QUARTER_PI + time / 100);
-    sphere1 = pg.sphere(100, 10, 10);
-    sphere1.position(0, 0);
-    image(
-      pg,
-      windowWidth - previewPosition,
-      windowHeight - previewPosition,
-      previewImageSize,
-      previewImageSize
-    );
+    makeWobbleSphere();
   }
+
   if (currentImage) {
     image(
       currentImage,
@@ -94,6 +80,28 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+function makeWobbleSphere() {
+  pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
+  pg.background(255, 192, 203);
+  let c = color("orchid");
+  pg.ambientLight(c);
+  pg.directionalLight(255, 0, 0, 0, 1, 0);
+  pg.noStroke();
+
+  let detail = 100; // Controls resolution
+  let radius = 100;
+
+  sphere1 = pg.sphere(100, detail, detail);
+  sphere1.position(0, 0);
+  image(
+    pg,
+    windowWidth - previewPosition,
+    windowHeight - previewPosition,
+    previewImageSize,
+    previewImageSize
+  );
 }
 
 drawRandomCircle = function (titleid) {
