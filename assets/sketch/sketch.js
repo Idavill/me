@@ -1,96 +1,28 @@
-let shared = {
-  num: 2222,
-  noiseScale: 100,
-  noiseStrength: 1,
-  particles: [],
-  imageMap: new Map(),
-  currentImage: null,
-  currentGraphics: null,
-  previewImageSize: 400,
-  previewBuffer: 50,
-  previewPosition: 450,
-  time: 0,
-  pg: null,
-  webglContexts: [],
-  images: {},
-};
+var num = 1222; // 2222
+var noiseScale = 80, // 100
+  noiseStrength = 1.5; // 1
+var particles = [num];
+var rectangle;
+let previewImageSize = 400;
+let previewBuffer = 50;
+let previewPosition = previewImageSize + previewBuffer;
+let img1;
+let img2;
+let img3;
+let imageMap = new Map();
+let currentImage = null;
+let currentGraphics = null;
+//let shape;
+let canvas;
+let canvas3D;
+let time = 0;
+let spherePosition = 0;
+let pg = null;
+let webglContexts = [];
+let op;
+let down;
 
-function sketchMain(p) {
-  p.preload = function () {
-    const paths = {
-      mm: "assets/images/mm.gif",
-      sentinel: "assets/images/sentinel.gif",
-      ideadots: "assets/images/ideadots.png",
-      vr: "assets/images/vr.png",
-      hemp: "assets/images/weave1.jpg",
-    };
-
-    for (let key in paths) {
-      shared.images[key] = p.loadImage(paths[key]);
-    }
-  };
-
-  p.setup = function () {
-    let pageHeight = p.select("body").height;
-    let canvas = p.createCanvas(p.windowWidth, pageHeight);
-    canvas.position(0, 0);
-    canvas.style("z-index", "-1");
-
-    shared.imageMap.set(
-      "/jekyll/update/2025/09/06/urban",
-      shared.images["sentinel"]
-    );
-    shared.imageMap.set(
-      "/jekyll/update/2025/09/06/meditations",
-      shared.images["mm"]
-    );
-    shared.imageMap.set(
-      "/jekyll/update/2025/09/06/ideadots",
-      shared.images["ideadots"]
-    );
-    shared.imageMap.set("/jekyll/update/2025/09/06/VR", shared.images["vr"]);
-    shared.imageMap.set(
-      "/jekyll/update/2025/09/06/hemp",
-      shared.images["hemp"]
-    );
-
-    p.noStroke();
-    for (let i = 0; i < shared.num; i++) {
-      let loc = p.createVector(p.random(p.width * 1.2), p.random(p.height), 2);
-      let dir = p.createVector(p.cos(0), p.sin(0));
-      let speed = p.random(0.1, 0.5);
-      shared.particles[i] = new Particle(p, loc, dir, speed);
-    }
-  };
-
-  p.draw = function () {
-    shared.time += 1;
-    p.fill(0, 10);
-    for (let particle of shared.particles) {
-      particle.run();
-    }
-
-    if (shared.currentGraphics) {
-      makeWobbleSphere(p);
-    }
-
-    if (shared.currentImage) {
-      p.image(
-        shared.currentImage,
-        p.windowWidth - shared.previewPosition,
-        p.windowHeight - shared.previewPosition,
-        shared.previewImageSize,
-        shared.previewImageSize
-      );
-    }
-  };
-
-  p.windowResized = function () {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-  };
-}
-
-function sketch3D(p) {
+function sketch1(p) {
   let shape;
 
   p.preload = function () {
@@ -124,34 +56,133 @@ function sketch3D(p) {
   };
 }
 
-function makeWobbleSphere(p) {
-  if (shared.webglContexts.length >= 2) {
-    shared.webglContexts[0] = null;
-    shared.webglContexts.shift();
+// // Run first p5 instance
+// new p5(sketch1);
+
+function preload() {
+  img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
+  img2 = loadImage("assets/images/sentinel.gif", handleImage, handleError);
+  img3 = loadImage("assets/images/ideadots.png", handleImage, handleError);
+  img4 = loadImage("assets/images/fauna2.gif", handleImage, handleError);
+  img5 = loadImage("assets/images/flax2.png", handleImage, handleError);
+  //shape = loadModel("assets/models/flat.obj");
+}
+function handleImage(img) {
+  console.log("Image loaded successfully:", img);
+}
+function handleError(event) {
+  console.error("Oops!", event);
+}
+
+function setup() {
+  describe("purple sand particles mimicking water flow");
+
+  pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
+
+  imageMap.set("/jekyll/update/2025/09/06/urban", img2);
+  imageMap.set("/jekyll/update/2025/09/06/meditations", img1);
+  imageMap.set("/jekyll/update/2025/09/06/ideadots", img3);
+  imageMap.set("/jekyll/update/2025/09/06/VR", img4);
+  imageMap.set("/jekyll/update/2025/09/06/hemp", img5);
+
+  let pageHeight = select("body").height;
+
+  canvas = createCanvas(windowWidth, pageHeight);
+  canvas.position(0, 0);
+  canvas.style("z-index", "-1");
+
+  noStroke();
+  for (let i = 0; i < num; i++) {
+    var loc = createVector(random(width * 1.2), random(height), 2);
+    var angle = 0; //any value to initialize
+    var dir = createVector(cos(angle), sin(angle));
+    var speed = random(0.1, 0.5);
+    particles[i] = new Particle(loc, dir, speed);
+  }
+}
+
+function draw() {
+  if (time === 0) {
+    down = false;
+  } else if (time === 255) {
+    down = true;
   }
 
-  shared.pg = p.createGraphics(
-    shared.previewImageSize,
-    shared.previewImageSize,
-    p.WEBGL
-  );
-  shared.webglContexts.push(shared.pg);
+  if (down) {
+    time -= 1;
+  } else if (!down) {
+    time += 1;
+  }
 
-  shared.pg.background(255, 192, 203);
-  let c = p.color("orchid");
-  shared.pg.ambientLight(c);
-  shared.pg.directionalLight(255, 0, 0, 0, 1, 0);
-  shared.pg.noStroke();
+  console.log(time);
+  fill(0, 10);
 
-  shared.pg.sphere(100, 100, 100);
-  shared.pg.translate(100, 10, 10);
+  for (let i = 0; i < particles.length; i++) {
+    particles[i].run();
+  }
+  if (currentGraphics) {
+    makeWobbleSphere();
+  }
 
-  p.image(
-    shared.pg,
-    p.windowWidth - shared.previewPosition,
-    p.windowHeight - shared.previewPosition,
-    shared.previewImageSize,
-    shared.previewImageSize
+  if (currentImage) {
+    image(
+      currentImage,
+      windowWidth - previewPosition,
+      windowHeight - previewPosition,
+      previewImageSize,
+      previewImageSize
+    );
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function makeWobbleSphere() {
+  pg.push();
+
+  pg.background(255, 192, 203);
+  //let c = color("orchid");
+  //pg.ambientLight(c);
+  pg.ambientLight(150 - time / 10, 50, 214 - time / 10);
+
+  pg.directionalLight(time, 50, 100, 1, time / 10, -time / 10);
+  pg.noStroke();
+
+  let detail = 20;
+  pg.rotateY(frameCount * 0.002); // Add rotation for visual interest
+
+  //pg.box(100, 100);
+  pg.sphere(100, detail, detail);
+
+  pg.pop();
+
+  // if (webglContexts.length >= 2) {
+  //   webglContexts[0] = null; // release oldest
+  //   webglContexts.shift();
+  // }
+  //pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
+  //webglContexts.push(pg);
+  // x = 0;
+
+  // pg.background(255, 192, 203);
+  // let c = color("orchid");
+  // pg.ambientLight(c);
+  // pg.directionalLight(255, 0, 0, x, 1, 0);
+  // pg.noStroke();
+
+  // let detail = 100; // Controls resolution
+  // let radius = 100;
+
+  // sphere1 = pg.sphere(100, detail, detail);
+  //sphere1.translate(100, 10, 10);
+  image(
+    pg,
+    windowWidth - previewPosition,
+    windowHeight - previewPosition,
+    previewImageSize,
+    previewImageSize
   );
 }
 
@@ -211,8 +242,8 @@ class Particle {
   }
 
   update() {
-    this.p.fill(50, 0, 255);
-    this.p.ellipse(this.loc.x, this.loc.y, this.loc.z);
+    fill(50, 0, 255, 10);
+    ellipse(this.loc.x, this.loc.y, this.loc.z);
   }
 }
 
