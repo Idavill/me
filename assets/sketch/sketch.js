@@ -22,32 +22,32 @@ let webglContexts = [];
 let op;
 let down;
 
-function sketch1(p) {
-  let shape;
-  p.preload = function () {
-    shape = loadModel("assets/models/flat.obj", { normalize: true });
-  };
+// function sketch1(p) {
+//   let shape;
+//   p.preload = function () {
+//     shape = loadModel("assets/models/flat.obj", { normalize: true });
+//   };
 
-  p.setup = function () {
-    ontop_canvas = p.createCanvas(previewImageSize, previewImageSize, p.WEBGL);
-    ontop_canvas.position(previewPosition + 200, previewPosition - 200);
-    //p.background(255);
-  };
-  p.draw = function () {
-    p.background(255); // Clear each frame
+//   p.setup = function () {
+//     ontop_canvas = p.createCanvas(previewImageSize, previewImageSize, p.WEBGL);
+//     ontop_canvas.position(previewPosition + 200, previewPosition - 200);
+//     //p.background(255);
+//   };
+//   p.draw = function () {
+//     p.background(255); // Clear each frame
 
-    p.lights(); // Add default lighting
-    p.noStroke(); // Optional: remove wireframe
-    p.orbitControl(); // Allow mouse interaction
+//     p.lights(); // Add default lighting
+//     p.noStroke(); // Optional: remove wireframe
+//     p.orbitControl(); // Allow mouse interaction
 
-    p.push(); // Save transformation state
-    p.translate(0, 0, 0); // Adjust as needed to center model
-    p.scale(2); // Scale up if model is too small
-    //p.model(shape); // Draw the model
-    p.box(100);
-    p.pop(); // Restore transformation state
-  };
-}
+//     p.push(); // Save transformation state
+//     p.translate(0, 0, 0); // Adjust as needed to center model
+//     p.scale(2); // Scale up if model is too small
+//     //p.model(shape); // Draw the model
+//     p.box(100);
+//     p.pop(); // Restore transformation state
+//   };
+// }
 
 // // Run first p5 instance
 // new p5(sketch1);
