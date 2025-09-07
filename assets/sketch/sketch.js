@@ -25,7 +25,6 @@ function preload() {
   img5 = loadImage("assets/images/hemp.jpg", handleImage, handleError);
   shape = loadModel("assets/models/flat.obj");
 }
-
 function handleImage(img) {
   console.log("Image loaded successfully:", img);
 }
@@ -45,11 +44,8 @@ function setup() {
   let pageHeight = select("body").height;
 
   canvas = createCanvas(windowWidth, pageHeight);
-  //canvas3D = createCanvas(windowWidth - 100, pageHeight - 100, WEBGL);
   canvas.position(0, 0);
-  //canvas3D.position(0, 0);
   canvas.style("z-index", "-1");
-  //canvas3D.style("z-index", "-2");
 
   noStroke();
   for (let i = 0; i < num; i++) {
@@ -69,12 +65,14 @@ function draw() {
   }
   if (currentGraphics) {
     pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
-    pg.background(100);
-    pg.lights();
+    pg.background(255, 192, 203);
+    let c = color("orchid");
+    pg.ambientLight(c);
     pg.noStroke();
     pg.rotateX(QUARTER_PI + time / 100);
     pg.rotateY(QUARTER_PI + time / 100);
-    pg.torus(15, 5);
+    sphere1 = pg.sphere(100, 10, 10);
+    sphere1.position(0, 0);
     image(
       pg,
       windowWidth - previewPosition,
