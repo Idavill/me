@@ -21,36 +21,7 @@ let pg = null;
 let webglContexts = [];
 let op;
 let down;
-
-// function sketch1(p) {
-//   let shape;
-//   p.preload = function () {
-//     shape = loadModel("assets/models/flat.obj", { normalize: true });
-//   };
-
-//   p.setup = function () {
-//     ontop_canvas = p.createCanvas(previewImageSize, previewImageSize, p.WEBGL);
-//     ontop_canvas.position(previewPosition + 200, previewPosition - 200);
-//     //p.background(255);
-//   };
-//   p.draw = function () {
-//     p.background(255); // Clear each frame
-
-//     p.lights(); // Add default lighting
-//     p.noStroke(); // Optional: remove wireframe
-//     p.orbitControl(); // Allow mouse interaction
-
-//     p.push(); // Save transformation state
-//     p.translate(0, 0, 0); // Adjust as needed to center model
-//     p.scale(2); // Scale up if model is too small
-//     //p.model(shape); // Draw the model
-//     p.box(100);
-//     p.pop(); // Restore transformation state
-//   };
-// }
-
-// // Run first p5 instance
-// new p5(sketch1);
+let pageHeight;
 
 function preload() {
   img1 = loadImage("/me/assets/images/mm.gif", handleImage, handleError);
@@ -69,6 +40,7 @@ function handleError(event) {
 
 function setup() {
   describe("purple sand particles mimicking water flow");
+  getContext("2d", { willReadFrequently: true });
 
   pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
 
@@ -78,7 +50,7 @@ function setup() {
   imageMap.set("/jekyll/update/2025/09/06/VR", img4);
   imageMap.set("/jekyll/update/2025/09/06/hemp", img5);
 
-  let pageHeight = select("body").height;
+  pageHeight = select("body").height;
 
   canvas = createCanvas(windowWidth, pageHeight);
   canvas.position(0, 0);
@@ -127,15 +99,14 @@ function draw() {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  pageHeight = select("body").height;
+  resizeCanvas(windowWidth, pageHeight);
 }
 
 function makeWobbleSphere() {
   pg.push();
 
   pg.background(255, 192, 203);
-  //let c = color("orchid");
-  //pg.ambientLight(c);
   pg.ambientLight(150 - time / 10, 50, 214 - time / 10);
 
   pg.directionalLight(time, 50, 100, 1, time / 10, -time / 10);
@@ -149,25 +120,6 @@ function makeWobbleSphere() {
 
   pg.pop();
 
-  // if (webglContexts.length >= 2) {
-  //   webglContexts[0] = null; // release oldest
-  //   webglContexts.shift();
-  // }
-  //pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
-  //webglContexts.push(pg);
-  // x = 0;
-
-  // pg.background(255, 192, 203);
-  // let c = color("orchid");
-  // pg.ambientLight(c);
-  // pg.directionalLight(255, 0, 0, x, 1, 0);
-  // pg.noStroke();
-
-  // let detail = 100; // Controls resolution
-  // let radius = 100;
-
-  // sphere1 = pg.sphere(100, detail, detail);
-  //sphere1.translate(100, 10, 10);
   image(
     pg,
     windowWidth - previewPosition,
