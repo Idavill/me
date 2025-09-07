@@ -16,11 +16,12 @@ dl, dd, ol, ul, figure {
   padding: 0;
 }
 
+
 /**
  * Basic styling
  */
 body {
-  font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font: 400 16px/1.5 -apple-system, "Google Sans Code",  BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: var(--calm-blue);
   /* background-color: #fdfdfd; */
   background-color: pink !important;
@@ -34,15 +35,6 @@ body {
   min-height: 100vh;
   flex-direction: column;
 }
-
-/* .script{
-  background-color: rgb(234, 5, 255);
-  border-radius: 10px;
-  color: white;
-  padding: 20px;
-  margin-left: auto;
-  margin-right: auto;
-} */
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
@@ -99,6 +91,14 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+.image-gallery {
+  position: fixed;
+  bottom:50px;
+  right:50px;
+  width:300px;
+  height:300px;
+}
+
 /**
  * Links
  */
@@ -108,7 +108,7 @@ a {
   background-color: var(--white);
   width:max-content;
   border: 2px solid var(--white);
-  border-radius: 25px;
+  border-radius: 5px;
   padding-left: 20px;
   padding-right: 20px;
 }
