@@ -40,7 +40,7 @@ function handleError(event) {
 
 function setup() {
   describe("purple sand particles mimicking water flow");
-  getContext("2d", { willReadFrequently: true });
+  //getContext("2d", { willReadFrequently: true });
 
   pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
 
