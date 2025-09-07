@@ -24,35 +24,28 @@ let down;
 
 function sketch1(p) {
   let shape;
-
   p.preload = function () {
-    shape = p.loadModel("assets/models/flat.obj", { normalize: true });
+    shape = loadModel("assets/models/flat.obj", { normalize: true });
   };
 
   p.setup = function () {
-    let canvas3D = p.createCanvas(
-      shared.previewImageSize,
-      shared.previewImageSize,
-      p.WEBGL
-    );
-    canvas3D.position(
-      shared.previewPosition + 200,
-      shared.previewPosition - 200
-    );
+    ontop_canvas = p.createCanvas(previewImageSize, previewImageSize, p.WEBGL);
+    ontop_canvas.position(previewPosition + 200, previewPosition - 200);
+    //p.background(255);
   };
-
   p.draw = function () {
-    p.background(255);
-    p.lights();
-    p.noStroke();
-    p.orbitControl();
+    p.background(255); // Clear each frame
 
-    p.push();
-    p.translate(0, 0, 0);
-    p.scale(2);
-    // p.model(shape);
+    p.lights(); // Add default lighting
+    p.noStroke(); // Optional: remove wireframe
+    p.orbitControl(); // Allow mouse interaction
+
+    p.push(); // Save transformation state
+    p.translate(0, 0, 0); // Adjust as needed to center model
+    p.scale(2); // Scale up if model is too small
+    //p.model(shape); // Draw the model
     p.box(100);
-    p.pop();
+    p.pop(); // Restore transformation state
   };
 }
 
@@ -186,67 +179,58 @@ function makeWobbleSphere() {
   );
 }
 
-function drawRandomCircle(titleid) {
-  let path = shared.imageMap.get(titleid);
+drawRandomCircle = function (titleid) {
+  let path = imageMap.get(titleid);
   if (titleid === "/jekyll/update/2025/09/06/ideadots") {
-    shared.currentGraphics = path;
-    shared.currentImage = null;
+    currentGraphics = path;
+    currentImage = null;
   } else {
-    shared.currentImage = path;
-    shared.currentGraphics = null;
+    currentImage = path;
+    currentGraphics = null;
   }
-}
+};
 
 class Particle {
-  constructor(p, loc, dir, speed) {
-    this.p = p;
-    this.loc = loc;
-    this.dir = dir;
-    this.speed = speed;
+  constructor(_loc, _dir, _speed) {
+    this.loc = _loc;
+    this.dir = _dir;
+    this.speed = _speed;
+    // var col;
   }
-
   run() {
     this.move();
     this.checkEdges();
     this.update();
   }
-
   move() {
     let angle =
-      this.p.noise(
-        this.loc.x / shared.noiseScale,
-        this.loc.y / shared.noiseScale,
-        this.p.frameCount / shared.noiseScale
+      noise(
+        this.loc.x / noiseScale,
+        this.loc.y / noiseScale,
+        frameCount / noiseScale
       ) *
-      this.p.TWO_PI *
-      shared.noiseStrength;
-
-    this.dir.x = this.p.sin(angle);
-    this.dir.y = this.p.tan(angle);
-    let vel = this.dir.copy();
-    let d = this.p.mouseX / this.p.mouseY;
-    vel.mult(this.speed * d);
-    this.loc.add(vel);
+      TWO_PI *
+      noiseStrength; //0-2PI
+    this.dir.x = sin(angle);
+    this.dir.y = tan(angle);
+    var vel = this.dir.copy();
+    var d = mouseX / mouseY; //direction change
+    vel.mult(this.speed * d); //vel = vel * (speed*d)
+    this.loc.add(vel); //loc = loc + vel
   }
-
   checkEdges() {
     if (
       this.loc.x < 0 ||
-      this.loc.x > this.p.width ||
+      this.loc.x > width ||
       this.loc.y < 0 ||
-      this.loc.y > this.p.height
+      this.loc.y > height
     ) {
-      this.loc.x = this.p.random(this.p.width * 10);
-      this.loc.y = this.p.random(this.p.height);
+      this.loc.x = random(width * 10);
+      this.loc.y = random(height);
     }
   }
-
   update() {
     fill(50, 0, 255, 10);
     ellipse(this.loc.x, this.loc.y, this.loc.z);
   }
 }
-
-// Launch both instances
-new p5(sketchMain);
-new p5(sketch3D);
