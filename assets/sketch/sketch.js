@@ -1,200 +1,221 @@
-var num = 2222;
-var noiseScale = 100,
-  noiseStrength = 1;
-var particles = [num];
-var rectangle;
-let previewImageSize = 400;
-let previewBuffer = 50;
-let previewPosition = previewImageSize + previewBuffer;
-let img1;
-let img2;
-let img3;
-let imageMap = new Map();
-let currentImage = null;
-let currentGraphics = null;
-//let shape;
-let canvas;
-let canvas3D;
-let time = 0;
-let spherePosition = 0;
-let pg = null;
-let webglContexts = [];
+let shared = {
+  num: 2222,
+  noiseScale: 100,
+  noiseStrength: 1,
+  particles: [],
+  imageMap: new Map(),
+  currentImage: null,
+  currentGraphics: null,
+  previewImageSize: 400,
+  previewBuffer: 50,
+  previewPosition: 450,
+  time: 0,
+  pg: null,
+  webglContexts: [],
+  images: {},
+};
 
-function sketch1(p) {
-  let shape;
+function sketchMain(p) {
   p.preload = function () {
-    shape = loadModel("assets/models/flat.obj", { normalize: true });
+    const paths = {
+      mm: "assets/images/mm.gif",
+      sentinel: "assets/images/sentinel.gif",
+      ideadots: "assets/images/ideadots.png",
+      vr: "assets/images/vr.png",
+      hemp: "assets/images/weave1.jpg",
+    };
+
+    for (let key in paths) {
+      shared.images[key] = p.loadImage(paths[key]);
+    }
   };
 
   p.setup = function () {
-    ontop_canvas = p.createCanvas(previewImageSize, previewImageSize, p.WEBGL);
-    ontop_canvas.position(previewPosition + 200, previewPosition - 200);
-    //p.background(255);
-  };
-  p.draw = function () {
-    p.background(255); // Clear each frame
+    let pageHeight = p.select("body").height;
+    let canvas = p.createCanvas(p.windowWidth, pageHeight);
+    canvas.position(0, 0);
+    canvas.style("z-index", "-1");
 
-    p.lights(); // Add default lighting
-    p.noStroke(); // Optional: remove wireframe
-    p.orbitControl(); // Allow mouse interaction
-
-    p.push(); // Save transformation state
-    p.translate(0, 0, 0); // Adjust as needed to center model
-    p.scale(2); // Scale up if model is too small
-    //p.model(shape); // Draw the model
-    p.box(100);
-    p.pop(); // Restore transformation state
-  };
-}
-
-// Run first p5 instance
-new p5(sketch1);
-
-function preload() {
-  img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
-  img2 = loadImage("assets/images/sentinel.gif", handleImage, handleError);
-  img3 = loadImage("assets/images/ideadots.png", handleImage, handleError);
-  img4 = loadImage("assets/images/vr.png", handleImage, handleError);
-  img5 = loadImage("assets/images/weave1.jpg", handleImage, handleError);
-  //shape = loadModel("assets/models/flat.obj");
-}
-function handleImage(img) {
-  console.log("Image loaded successfully:", img);
-}
-function handleError(event) {
-  console.error("Oops!", event);
-}
-
-function setup() {
-  describe("purple sand particles mimicking water flow");
-
-  imageMap.set("/jekyll/update/2025/09/06/urban", img2);
-  imageMap.set("/jekyll/update/2025/09/06/meditations", img1);
-  imageMap.set("/jekyll/update/2025/09/06/ideadots", img3);
-  imageMap.set("/jekyll/update/2025/09/06/VR", img4);
-  imageMap.set("/jekyll/update/2025/09/06/hemp", img5);
-
-  let pageHeight = select("body").height;
-
-  canvas = createCanvas(windowWidth, pageHeight);
-  canvas.position(0, 0);
-  canvas.style("z-index", "-1");
-
-  noStroke();
-  for (let i = 0; i < num; i++) {
-    var loc = createVector(random(width * 1.2), random(height), 2);
-    var angle = 0; //any value to initialize
-    var dir = createVector(cos(angle), sin(angle));
-    var speed = random(0.1, 0.5);
-    particles[i] = new Particle(loc, dir, speed);
-  }
-}
-
-function draw() {
-  time += 1;
-  fill(0, 10);
-  for (let i = 0; i < particles.length; i++) {
-    particles[i].run();
-  }
-  if (currentGraphics) {
-    makeWobbleSphere();
-  }
-
-  if (currentImage) {
-    image(
-      currentImage,
-      windowWidth - previewPosition,
-      windowHeight - previewPosition,
-      previewImageSize,
-      previewImageSize
+    shared.imageMap.set(
+      "/jekyll/update/2025/09/06/urban",
+      shared.images["sentinel"]
     );
-  }
+    shared.imageMap.set(
+      "/jekyll/update/2025/09/06/meditations",
+      shared.images["mm"]
+    );
+    shared.imageMap.set(
+      "/jekyll/update/2025/09/06/ideadots",
+      shared.images["ideadots"]
+    );
+    shared.imageMap.set("/jekyll/update/2025/09/06/VR", shared.images["vr"]);
+    shared.imageMap.set(
+      "/jekyll/update/2025/09/06/hemp",
+      shared.images["hemp"]
+    );
+
+    p.noStroke();
+    for (let i = 0; i < shared.num; i++) {
+      let loc = p.createVector(p.random(p.width * 1.2), p.random(p.height), 2);
+      let dir = p.createVector(p.cos(0), p.sin(0));
+      let speed = p.random(0.1, 0.5);
+      shared.particles[i] = new Particle(p, loc, dir, speed);
+    }
+  };
+
+  p.draw = function () {
+    shared.time += 1;
+    p.fill(0, 10);
+    for (let particle of shared.particles) {
+      particle.run();
+    }
+
+    if (shared.currentGraphics) {
+      makeWobbleSphere(p);
+    }
+
+    if (shared.currentImage) {
+      p.image(
+        shared.currentImage,
+        p.windowWidth - shared.previewPosition,
+        p.windowHeight - shared.previewPosition,
+        shared.previewImageSize,
+        shared.previewImageSize
+      );
+    }
+  };
+
+  p.windowResized = function () {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+function sketch3D(p) {
+  let shape;
+
+  p.preload = function () {
+    shape = p.loadModel("assets/models/flat.obj", { normalize: true });
+  };
+
+  p.setup = function () {
+    let canvas3D = p.createCanvas(
+      shared.previewImageSize,
+      shared.previewImageSize,
+      p.WEBGL
+    );
+    canvas3D.position(
+      shared.previewPosition + 200,
+      shared.previewPosition - 200
+    );
+  };
+
+  p.draw = function () {
+    p.background(255);
+    p.lights();
+    p.noStroke();
+    p.orbitControl();
+
+    p.push();
+    p.translate(0, 0, 0);
+    p.scale(2);
+    // p.model(shape);
+    p.box(100);
+    p.pop();
+  };
 }
 
-function makeWobbleSphere() {
-  if (webglContexts.length >= 2) {
-    webglContexts[0] = null; // release oldest
-    webglContexts.shift();
+function makeWobbleSphere(p) {
+  if (shared.webglContexts.length >= 2) {
+    shared.webglContexts[0] = null;
+    shared.webglContexts.shift();
   }
-  pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
-  webglContexts.push(pg);
 
-  pg.background(255, 192, 203);
-  let c = color("orchid");
-  pg.ambientLight(c);
-  pg.directionalLight(255, 0, 0, 0, 1, 0);
-  pg.noStroke();
+  shared.pg = p.createGraphics(
+    shared.previewImageSize,
+    shared.previewImageSize,
+    p.WEBGL
+  );
+  shared.webglContexts.push(shared.pg);
 
-  let detail = 100; // Controls resolution
-  let radius = 100;
+  shared.pg.background(255, 192, 203);
+  let c = p.color("orchid");
+  shared.pg.ambientLight(c);
+  shared.pg.directionalLight(255, 0, 0, 0, 1, 0);
+  shared.pg.noStroke();
 
-  sphere1 = pg.sphere(100, detail, detail);
-  sphere1.translate(100, 10, 10);
-  image(
-    pg,
-    windowWidth - previewPosition,
-    windowHeight - previewPosition,
-    previewImageSize,
-    previewImageSize
+  shared.pg.sphere(100, 100, 100);
+  shared.pg.translate(100, 10, 10);
+
+  p.image(
+    shared.pg,
+    p.windowWidth - shared.previewPosition,
+    p.windowHeight - shared.previewPosition,
+    shared.previewImageSize,
+    shared.previewImageSize
   );
 }
 
-drawRandomCircle = function (titleid) {
-  let path = imageMap.get(titleid);
+function drawRandomCircle(titleid) {
+  let path = shared.imageMap.get(titleid);
   if (titleid === "/jekyll/update/2025/09/06/ideadots") {
-    currentGraphics = path;
-    currentImage = null;
+    shared.currentGraphics = path;
+    shared.currentImage = null;
   } else {
-    currentImage = path;
-    currentGraphics = null;
+    shared.currentImage = path;
+    shared.currentGraphics = null;
   }
-};
+}
 
 class Particle {
-  constructor(_loc, _dir, _speed) {
-    this.loc = _loc;
-    this.dir = _dir;
-    this.speed = _speed;
-    // var col;
+  constructor(p, loc, dir, speed) {
+    this.p = p;
+    this.loc = loc;
+    this.dir = dir;
+    this.speed = speed;
   }
+
   run() {
     this.move();
     this.checkEdges();
     this.update();
   }
+
   move() {
     let angle =
-      noise(
-        this.loc.x / noiseScale,
-        this.loc.y / noiseScale,
-        frameCount / noiseScale
+      this.p.noise(
+        this.loc.x / shared.noiseScale,
+        this.loc.y / shared.noiseScale,
+        this.p.frameCount / shared.noiseScale
       ) *
-      TWO_PI *
-      noiseStrength; //0-2PI
-    this.dir.x = sin(angle);
-    this.dir.y = tan(angle);
-    var vel = this.dir.copy();
-    var d = mouseX / mouseY; //direction change
-    vel.mult(this.speed * d); //vel = vel * (speed*d)
-    this.loc.add(vel); //loc = loc + vel
+      this.p.TWO_PI *
+      shared.noiseStrength;
+
+    this.dir.x = this.p.sin(angle);
+    this.dir.y = this.p.tan(angle);
+    let vel = this.dir.copy();
+    let d = this.p.mouseX / this.p.mouseY;
+    vel.mult(this.speed * d);
+    this.loc.add(vel);
   }
+
   checkEdges() {
     if (
       this.loc.x < 0 ||
-      this.loc.x > width ||
+      this.loc.x > this.p.width ||
       this.loc.y < 0 ||
-      this.loc.y > height
+      this.loc.y > this.p.height
     ) {
-      this.loc.x = random(width * 10);
-      this.loc.y = random(height);
+      this.loc.x = this.p.random(this.p.width * 10);
+      this.loc.y = this.p.random(this.p.height);
     }
   }
+
   update() {
-    fill(50, 0, 255);
-    ellipse(this.loc.x, this.loc.y, this.loc.z);
+    this.p.fill(50, 0, 255);
+    this.p.ellipse(this.loc.x, this.loc.y, this.loc.z);
   }
 }
+
+// Launch both instances
+new p5(sketchMain);
+new p5(sketch3D);
