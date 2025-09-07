@@ -106,8 +106,6 @@ function draw() {
   } else if (!down) {
     time += 1;
   }
-
-  console.log(time);
   fill(0, 10);
 
   for (let i = 0; i < particles.length; i++) {
@@ -214,7 +212,7 @@ class Particle {
     this.dir.x = sin(angle);
     this.dir.y = tan(angle);
     var vel = this.dir.copy();
-    var d = mouseX / mouseY; //direction change
+    var d = mouseX / mouseY ? mouseX / mouseY : 1; //direction change
     vel.mult(this.speed * d); //vel = vel * (speed*d)
     this.loc.add(vel); //loc = loc + vel
   }
