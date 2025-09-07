@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "IdeaDots: Spatial design collage"
+title: "IdeaDots: Spatial collage"
 date: 2025-09-06 16:58:44 +0200
 categories: jekyll update
 ---

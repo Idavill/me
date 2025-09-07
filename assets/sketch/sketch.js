@@ -4,7 +4,9 @@ var noiseScale = 80, // 100
 var particles = [num];
 var rectangle;
 let previewImageSize = 400;
-let previewBuffer = 50;
+let previewBuffer = 200;
+let previewBufferHeight = 200;
+let previewBufferWidth = 200;
 let previewPosition = previewImageSize + previewBuffer;
 let img1;
 let img2;
@@ -12,7 +14,6 @@ let img3;
 let imageMap = new Map();
 let currentImage = null;
 let currentGraphics = null;
-//let shape;
 let canvas;
 let canvas3D;
 let time = 0;
@@ -21,36 +22,6 @@ let pg = null;
 let webglContexts = [];
 let op;
 let down;
-
-// function sketch1(p) {
-//   let shape;
-//   p.preload = function () {
-//     shape = loadModel("assets/models/flat.obj", { normalize: true });
-//   };
-
-//   p.setup = function () {
-//     ontop_canvas = p.createCanvas(previewImageSize, previewImageSize, p.WEBGL);
-//     ontop_canvas.position(previewPosition + 200, previewPosition - 200);
-//     //p.background(255);
-//   };
-//   p.draw = function () {
-//     p.background(255); // Clear each frame
-
-//     p.lights(); // Add default lighting
-//     p.noStroke(); // Optional: remove wireframe
-//     p.orbitControl(); // Allow mouse interaction
-
-//     p.push(); // Save transformation state
-//     p.translate(0, 0, 0); // Adjust as needed to center model
-//     p.scale(2); // Scale up if model is too small
-//     //p.model(shape); // Draw the model
-//     p.box(100);
-//     p.pop(); // Restore transformation state
-//   };
-// }
-
-// // Run first p5 instance
-// new p5(sketch1);
 
 function preload() {
   img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
@@ -118,8 +89,8 @@ function draw() {
   if (currentImage) {
     image(
       currentImage,
-      windowWidth - previewPosition,
-      windowHeight - previewPosition,
+      windowWidth - previewBufferWidth,
+      windowHeight - previewBufferHeight,
       previewImageSize,
       previewImageSize
     );
@@ -128,6 +99,8 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  previewBufferHeight = windowHeight / 2;
+  previewBufferWidth = windowWidth / 2;
 }
 
 function makeWobbleSphere() {
@@ -149,29 +122,10 @@ function makeWobbleSphere() {
 
   pg.pop();
 
-  // if (webglContexts.length >= 2) {
-  //   webglContexts[0] = null; // release oldest
-  //   webglContexts.shift();
-  // }
-  //pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
-  //webglContexts.push(pg);
-  // x = 0;
-
-  // pg.background(255, 192, 203);
-  // let c = color("orchid");
-  // pg.ambientLight(c);
-  // pg.directionalLight(255, 0, 0, x, 1, 0);
-  // pg.noStroke();
-
-  // let detail = 100; // Controls resolution
-  // let radius = 100;
-
-  // sphere1 = pg.sphere(100, detail, detail);
-  //sphere1.translate(100, 10, 10);
   image(
     pg,
-    windowWidth - previewPosition,
-    windowHeight - previewPosition,
+    windowWidth - previewBufferWidth,
+    windowHeight - previewBufferHeight,
     previewImageSize,
     previewImageSize
   );
