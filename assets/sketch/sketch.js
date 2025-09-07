@@ -7,19 +7,27 @@ let img1;
 let img2;
 let img3;
 
+let one = "/jekyll/update/2025/09/06/meditations";
+let two = "/jekyll/update/2025/09/06/urban";
+
 function preload() {
-  //img1 = loadImage("assets/images/fun.png");
-  //img2 = loadImage("../images/td.png");
+  //mg1 = loadImage("assets/images/mm.gif");
+  //img2 = loadImage("assets/images/urbanf1.png");
+  img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
   //img3 = loadImage("../images/vr.png");
+}
+
+function handleImage(img) {
+  console.log("Image loaded successfully:", img);
+}
+function handleError(event) {
+  console.error("Oops!", event);
 }
 
 function setup() {
   describe("purple sand particles mimicking water flow");
-
-  //let postHeader = select("a.post-link");
-  //postHeader.mouseOver(drawRandomCircle);
-
-  let canvas = createCanvas(windowWidth, windowHeight);
+  let pageHeight = select("body").height;
+  let canvas = createCanvas(windowWidth, pageHeight);
   canvas.position(0, 0);
   canvas.style("z-index", "-1");
   noStroke();
@@ -28,42 +36,29 @@ function setup() {
     var angle = 0; //any value to initialize
     var dir = createVector(cos(angle), sin(angle));
     var speed = random(0.1, 0.5);
-    //var speed = random(5, map(mouseX, 0, width, 5, 20)); // faster
     particles[i] = new Particle(loc, dir, speed);
   }
 }
 
 function draw() {
-  //rect(windowWidth - 150, windowHeight - 150, 100, 100);
   fill(0, 10);
   for (let i = 0; i < particles.length; i++) {
     particles[i].run();
   }
 }
 
-// function write(textvar) {
-//   textSize(20);
-//   textAlign(CENTER);
-
-//   //Add font
-//   //textFont("Courier New");
-//   fill(255, 0, 0);
-//   text(textvar);
-// }
-
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-// drawRandomCircle = function (param) {
-//   ellipse(random(width), random(height), 25, 25);
-//   console.log("halløj");
-// };
-
-// function mouseMoved() {
-//   drawRandomCircle();
-//    let cnv = select('canvas');
-// }
+drawRandomCircle = function (param) {
+  if (param === one) {
+    //console.log("halløj", param, one);
+    image(img1, windowWidth - 550, windowHeight - 550, 500, 500);
+  } else if (param == two) {
+    image(img2, windowWidth - 550, windowHeight - 550, 500, 500);
+  }
+};
 
 class Particle {
   constructor(_loc, _dir, _speed) {

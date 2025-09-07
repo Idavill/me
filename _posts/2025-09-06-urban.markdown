@@ -1,0 +1,18 @@
+---
+layout: post
+title: "The Urban Archive"
+date: 2025-09-06 16:58:44 +0200
+categories: jekyll update
+---
+
+`This project reimagines environmental data as architectural storytelling. Through satellite imagery, climate indicators, and spatial analytics, six thematic maps construct a chronological narrative—from the subtle pulses of air and heat to the physical imprints of urban expansion and ecological presence. Each map transcends its technical function, becoming a spatial artifact that invites viewers to interpret the city as a dynamic, living organism in flux.`
+
+![Alt text]({{ site.baseurl }}/assets/images/urbanf1.png)
+
+![Alt text]({{ site.baseurl }}/assets/images/urbanf2.png)
+
+`Urban Frequency challenges architects, planners, and everyday citizens to reimagine data—not as detached figures, but as vibrant stories encoded in time. These temporal frequencies capture the pulse of the city: how it breathes, warms, expands, and evolves. By attuning ourselves to these rhythms, we open the door to more responsive, intentional design—one that aligns with the lived patterns of our environments and the futures we are actively constructing.`
+
+![Alt text]({{ site.baseurl }}/assets/images/urbanf3.png)
+
+![Alt text]({{ site.baseurl }}/assets/images/urbanf4.png)

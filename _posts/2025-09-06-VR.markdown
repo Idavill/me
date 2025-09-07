@@ -1,0 +1,19 @@
+---
+layout: post
+title: "XR/VR/AR"
+date: 2025-09-06 16:58:44 +0200
+categories: jekyll update
+---
+
+`Weather Report is a mobile VR application that brings data consumption, production, and storage into closer view—highlighting the environmental impact of these behaviors. Designed for Google Cardboard, the app uses the smartphone as a medium to display immersive VR video content.`
+
+![Alt text]({{ site.baseurl }}/assets/images/vr.png)
+
+`The cloud is an abstract metaphor of a digital storage department, usually placed far away from our everyday usage of technology and data. Consequently, we find ourselves distanced from these physical spaces, and somewhat unaware of the extend of our actions. We have no relationship with either the physical storage or the enviromental impact. Therefore, we found it interesting to work with the ab- stract aspects of the cloud metaphor and follow the metaphor through by making it tangible and perceivable as a real ‘cloud’ in the sky. The cloud is scalable in size and the appearance changes depending on how much data it stores. The concept acts as a social commentary on the environmental impact our data usage has on the planet. We wanted to make the seam in the physical world appear less seamless in the virtual world and in our interaction with our data, by letting the storage affect weather and climate in our VR-world`
+
+`Usability study of novel interactions in VR`
+![Alt text]({{ site.baseurl }}/assets/images/observations.png)
+
+<!-- ![Alt text]({{ site.baseurl }}/assets/images/drilldown.png)
+
+![Alt text]({{ site.baseurl }}/assets/images/foundation.png) -->

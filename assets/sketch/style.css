@@ -116,7 +116,7 @@ a:visited {
   color: var(--dark-blue);
 }
 a:hover {
-  color: var(--red);
+  color: var(--brat-green);
   background-color: var(--dark-blue);
   border: 2px solid var(--dark-blue);
 
@@ -124,6 +124,9 @@ a:hover {
 }
 .social-media-list a:hover {
   text-decoration: none;
+  /* padding-left: 20px;
+  padding-right: 20px; */
+
 }
 .social-media-list a:hover .username {
   text-decoration: none;
@@ -444,7 +447,8 @@ table td {
   color:var(--dark-blue);
   background-color: var(--white);
   border: 2px solid var(--white);
-  border-radius: 25px;
+  width:max-content;
+  border-radius: 5px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top:10px;

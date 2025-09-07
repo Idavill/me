@@ -1,0 +1,10 @@
+---
+layout: post
+title: "Hemp in Northern Jutland"
+date: 2025-09-06 16:58:44 +0200
+categories: jekyll update
+---
+
+`Research Project to investigate the joruney of hemp through the baltics to northern Jutland in order to investigate the textile production in the area. This involves looking at shipping data spanning from 1650-1800, cleaning data and creating meaningful data visualisation of the relationship between textile import and its historical context`
+
+`Further description coming soon`
