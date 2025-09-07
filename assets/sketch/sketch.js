@@ -4,21 +4,20 @@ var noiseScale = 100,
 var particles = [num];
 var rectangle;
 let previewImageSize = 400;
-let previewBuffer = 100;
+let previewBuffer = 50;
 let previewPosition = previewImageSize + previewBuffer;
 let img1;
 let img2;
 let img3;
 let imageMap = new Map();
-
-let meditation = "/jekyll/update/2025/09/06/meditations";
-let urban = "/jekyll/update/2025/09/06/urban";
+let currentImage = null;
 
 function preload() {
-  //mg1 = loadImage("assets/images/mm.gif");
-  img2 = loadImage("assets/images/urbanf1.png");
   img1 = loadImage("assets/images/mm.gif", handleImage, handleError);
-  //img3 = loadImage("../images/vr.png");
+  img2 = loadImage("assets/images/urbanf1.png", handleImage, handleError);
+  img3 = loadImage("assets/images/ideadots.png", handleImage, handleError);
+  img4 = loadImage("assets/images/vr.png", handleImage, handleError);
+  img5 = loadImage("assets/images/idea1.png", handleImage, handleError);
 }
 
 function handleImage(img) {
@@ -31,8 +30,11 @@ function handleError(event) {
 function setup() {
   describe("purple sand particles mimicking water flow");
 
-  imageMap.set(urban, img2);
-  imageMap.set(meditation, img1);
+  imageMap.set("/jekyll/update/2025/09/06/urban", img2);
+  imageMap.set("/jekyll/update/2025/09/06/meditations", img1);
+  imageMap.set("/jekyll/update/2025/09/06/ideadots", img3);
+  imageMap.set("/jekyll/update/2025/09/06/VR", img4);
+  imageMap.set("/jekyll/update/2025/09/06/hemp", img5);
 
   let pageHeight = select("body").height;
   let canvas = createCanvas(windowWidth, pageHeight);
@@ -53,6 +55,17 @@ function draw() {
   for (let i = 0; i < particles.length; i++) {
     particles[i].run();
   }
+
+  if (currentImage) {
+    //imageMode(CENTER);
+    image(
+      currentImage,
+      windowWidth - previewPosition,
+      windowHeight - previewPosition,
+      previewImageSize,
+      previewImageSize
+    );
+  }
 }
 
 function windowResized() {
@@ -61,32 +74,14 @@ function windowResized() {
 
 drawRandomCircle = function (titleid) {
   let path = imageMap.get(titleid);
-  console.log("path : ", path, titleid);
-  image(
-    path,
-    windowWidth - previewPosition,
-    windowHeight - previewPosition,
-    previewImageSize,
-    previewImageSize
-  );
-
-  // if (param === meditation) {
-  //   image(
-  //     img1,
-  //     windowWidth - previewPosition,
-  //     windowHeight - previewPosition,
-  //     previewImageSize,
-  //     previewImageSize
-  //   );
-  // } else if (param == urban) {
-  //   image(
-  //     img2,
-  //     windowWidth - previewPosition,
-  //     windowHeight - previewImageSize + previewBuffer,
-  //     previewImageSize,
-  //     previewImageSize
-  //   );
-  // }
+  currentImage = path;
+  // image(
+  //   path,
+  //   windowWidth - previewPosition,
+  //   windowHeight - previewPosition,
+  //   previewImageSize,
+  //   previewImageSize
+  // );
 };
 
 class Particle {
