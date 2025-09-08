@@ -14,6 +14,7 @@ let img4;
 let img5;
 let currentGraphics = null;
 let currentImage = null;
+let previewImageSize = 400;
 
 function s1(p) {
   p.setup = function () {
@@ -77,7 +78,7 @@ function s2(p) {
     p.square(p.mouseX, p.mouseY, 50);
 
     if (currentImage) {
-      p.image(currentImage, 200, 200, 200, 200);
+      p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
     }
   };
   p.windowResized = function () {
