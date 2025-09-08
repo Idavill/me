@@ -14,10 +14,7 @@ function s1(p) {
     p.background(255, 192, 203);
     //p.background(0);
 
-    let halfh = p.windowHeight / 2;
-    let h = p.windowHeight / halfh;
-    canvas1.position(p.windowWidth / 2 + 100, h + heightOffset);
-
+    canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
     //model = p.loadModel("/me/assets/models/by.obj", { normalize: true });
   };
   p.draw = function () {
@@ -29,10 +26,14 @@ function s1(p) {
     p.sphere(120, 20, 10);
   };
   p.windowResized = function () {
+    canvas1.position(p.windowWidth / 2 + 100, calculateHeight);
+    console.log("window resized!");
+  };
+
+  calculateHeight = function () {
     let halfh = p.windowHeight / 2;
     let h = p.windowHeight / halfh;
-    canvas1.position(p.windowWidth / 2 + 100, h + heightOffset);
-    console.log("window resized!");
+    return h + heightOffset;
   };
 }
 
