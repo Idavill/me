@@ -12,7 +12,6 @@ function s1(p) {
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
     p.background(255, 192, 203);
-    //p.background(0);
 
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
     //model = p.loadModel("/me/assets/models/by.obj", { normalize: true });
@@ -29,7 +28,6 @@ function s1(p) {
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight);
     console.log("window resized!");
   };
-
   calculateHeight = function () {
     let halfh = p.windowHeight / 2;
     let h = p.windowHeight / halfh;
