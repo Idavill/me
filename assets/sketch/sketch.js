@@ -5,8 +5,8 @@ var particles = [num];
 var rectangle;
 let previewImageSize = 400;
 let previewBuffer = 200;
-let previewBufferHeight = 200;
-let previewBufferWidth = 200;
+let previewBufferHeight = 0;
+let previewBufferWidth = 0;
 let previewPosition = previewImageSize + previewBuffer;
 let img1;
 let img2;
@@ -39,7 +39,8 @@ function handleError(event) {
 }
 
 function setup() {
-  describe("purple sand particles mimicking water flow");
+  previewBufferHeight = windowHeight - 165;
+  previewBufferWidth = windowWidth / 2;
 
   pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
 
@@ -66,6 +67,8 @@ function setup() {
 }
 
 function draw() {
+  //pg = createGraphics(previewImageSize, previewImageSize, WEBGL);
+
   if (time === 0) {
     down = false;
   } else if (time === 255) {
@@ -99,27 +102,19 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  previewBufferHeight = windowHeight / 2;
-  previewBufferWidth = windowWidth / 2;
+  previewBufferHeight = windowHeight - 165;
+  previewBufferWidth = windowWidth / 2 - 100;
 }
 
 function makeWobbleSphere() {
   pg.push();
-
   pg.background(255, 192, 203);
-  //let c = color("orchid");
-  //pg.ambientLight(c);
   pg.ambientLight(150 - time / 10, 50, 214 - time / 10);
-
   pg.directionalLight(time, 50, 100, 1, time / 10, -time / 10);
   pg.noStroke();
-
   let detail = 20;
   pg.rotateY(frameCount * 0.002); // Add rotation for visual interest
-
-  //pg.box(100, 100);
   pg.sphere(100, detail, detail);
-
   pg.pop();
 
   image(
@@ -147,7 +142,6 @@ class Particle {
     this.loc = _loc;
     this.dir = _dir;
     this.speed = _speed;
-    // var col;
   }
   run() {
     this.move();
