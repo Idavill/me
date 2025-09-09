@@ -3,7 +3,7 @@ let canvas1;
 let canvas2;
 let pageHeight;
 let heightOffset = 170;
-let canvasSize = 300;
+let canvasSize = 400;
 let particles;
 let titleId;
 let imageMap = new Map();
@@ -30,6 +30,7 @@ function s1(p) {
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
     p.orbitControl();
+    p.translate(0, -40, 0);
     p.rotateY(p.frameCount * 0.001);
     p.sphere(120, 20, 10);
   };
@@ -71,14 +72,13 @@ function s2(p) {
     pageHeight = p.select("body").height;
     canvas2 = p.createCanvas(canvasSize, canvasSize).parent("pfive-container");
     canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
-    p.fill(0);
-    p.stroke(255);
   };
   p.draw = function () {
-    p.square(p.mouseX, p.mouseY, 50);
-
     if (currentImage) {
+      canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
       p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
+    } else {
+      canvas2.position(1000, 1000, 1000);
     }
   };
   p.windowResized = function () {
