@@ -1,6 +1,7 @@
 let model;
 let canvas1;
 let canvas2;
+let canvas3;
 let pageHeight;
 let heightOffset = 170;
 let canvasSize = 400;
@@ -117,6 +118,20 @@ function s2(p) {
   };
 }
 
+function background(p) {
+  p.setup = function () {
+    canvas3 = p
+      .createCanvas(p.windowWidth, p.windowHeight)
+      .parent("pfive-container");
+    canvas3.position(0, 0);
+    p.background(255);
+    canvas3.style("z-index", "-1");
+  };
+  p.draw = function () {
+    p.circle(p.mouseX, p.mouseY, 50);
+  };
+}
+
 drawRandomCircle = function (titleid) {
   let path = imageMap.get(titleid);
   console.log(path, titleid);
@@ -129,5 +144,6 @@ drawRandomCircle = function (titleid) {
   }
 };
 
+new p5(background);
 new p5(s1);
 new p5(s2);
