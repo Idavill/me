@@ -22,26 +22,19 @@ function s1(p) {
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
-    //p.background(255, 192, 203);
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
 
     let openpost = p.select(".openpost-class");
-    console.log("openpost: ", openpost);
     if (openpost) {
       postShowingvar = true;
     } else {
       postShowingvar = false;
     }
-
     //model = p.loadModel("/me/assets/models/by.obj", { normalize: true });
   };
   p.draw = function () {
     if (postShowingvar) {
-      //canvas1.position(1000, 1000);
       remove();
-    } else {
-      console.log("shooow");
-      canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
     }
     p.background(255, 192, 203);
     let c = p.color(255, 150, 203);
