@@ -15,18 +15,34 @@ let img5;
 let currentGraphics = null;
 let currentImage = null;
 let previewImageSize = 400;
+let postShowingvar = true;
 
 function s1(p) {
   p.setup = function () {
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
-    //p.background(255, 192, 203);
+    p.background(255, 192, 203);
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
+
+    let openpost = p.select(".openpost-class");
+    console.log("openpost: ", openpost);
+    if (openpost) {
+      postShowingvar = true;
+    } else {
+      postShowingvar = false;
+    }
+
     //model = p.loadModel("/me/assets/models/by.obj", { normalize: true });
   };
   p.draw = function () {
-    //p.background(255, 192, 203);
+    if (postShowingvar) {
+      canvas1.position(1000, 1000);
+    } else {
+      console.log("shooow");
+      canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
+    }
+    p.background(255, 192, 203);
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
     p.orbitControl();
@@ -102,6 +118,11 @@ drawRandomCircle = function (titleid) {
     currentImage = path;
     currentGraphics = null;
   }
+};
+
+postShowing = function () {
+  postShowingvar = !postShowingvar;
+  console.log("showpost??", postShowingvar);
 };
 
 new p5(s1);
