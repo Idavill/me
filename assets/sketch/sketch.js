@@ -22,7 +22,7 @@ function s1(p) {
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
-    p.background(255, 192, 203);
+    //p.background(255, 192, 203);
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
 
     let openpost = p.select(".openpost-class");
@@ -37,7 +37,8 @@ function s1(p) {
   };
   p.draw = function () {
     if (postShowingvar) {
-      canvas1.position(1000, 1000);
+      //canvas1.position(1000, 1000);
+      remove();
     } else {
       console.log("shooow");
       canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
@@ -84,7 +85,6 @@ function s2(p) {
   }
   p.setup = function () {
     setImageMap();
-
     pageHeight = p.select("body").height;
     canvas2 = p.createCanvas(canvasSize, canvasSize).parent("pfive-container");
     canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
@@ -118,11 +118,6 @@ drawRandomCircle = function (titleid) {
     currentImage = path;
     currentGraphics = null;
   }
-};
-
-postShowing = function () {
-  postShowingvar = !postShowingvar;
-  console.log("showpost??", postShowingvar);
 };
 
 new p5(s1);
