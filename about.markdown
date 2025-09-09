@@ -8,6 +8,8 @@ permalink: /about/
 
 `This site showcases some of my most recent projects`
 
-`Software development | Interaction design | 3D modelling | Data processing`
+`Software development | Interaction design`
+
+`| 3D modelling | Data processing`
 
 <!-- ![Alt text]({{ site.baseurl }}/assets/images/fun.png) -->
