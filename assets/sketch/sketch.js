@@ -34,7 +34,7 @@ function s1(p) {
   };
   p.draw = function () {
     if (postShowingvar) {
-      remove();
+      p.remove();
     }
     p.background(255, 192, 203);
     let c = p.color(255, 150, 203);
@@ -57,11 +57,21 @@ function s1(p) {
 
 function s2(p) {
   p.preload = function () {
-    img1 = p.loadImage("assets/images/mm.gif", handleImage, handleError);
-    img2 = p.loadImage("assets/images/sentinel.gif", handleImage, handleError);
-    img3 = p.loadImage("assets/images/ideadots.png", handleImage, handleError);
-    img4 = p.loadImage("assets/images/fauna2.gif", handleImage, handleError);
-    img5 = p.loadImage("assets/images/flax2.png", handleImage, handleError);
+    if (!postShowingvar) {
+      img1 = p.loadImage("assets/images/mm.gif", handleImage, handleError);
+      img2 = p.loadImage(
+        "assets/images/sentinel.gif",
+        handleImage,
+        handleError
+      );
+      img3 = p.loadImage(
+        "assets/images/ideadots.png",
+        handleImage,
+        handleError
+      );
+      img4 = p.loadImage("assets/images/fauna2.gif", handleImage, handleError);
+      img5 = p.loadImage("assets/images/flax2.png", handleImage, handleError);
+    }
   };
   function handleImage(img) {
     console.log("Image loaded successfully:", img);
@@ -77,17 +87,23 @@ function s2(p) {
     imageMap.set("/jekyll/update/2025/09/06/hemp", img5);
   }
   p.setup = function () {
-    setImageMap();
-    pageHeight = p.select("body").height;
-    canvas2 = p.createCanvas(canvasSize, canvasSize).parent("pfive-container");
-    canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+    if (!postShowingvar) {
+      setImageMap();
+      pageHeight = p.select("body").height;
+      canvas2 = p
+        .createCanvas(canvasSize, canvasSize)
+        .parent("pfive-container");
+      canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+    }
   };
   p.draw = function () {
-    if (currentImage) {
-      canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
-      p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
-    } else {
-      canvas2.position(1000, 1000, 1000);
+    if (!postShowingvar) {
+      if (currentImage) {
+        canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+        p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
+      } else {
+        canvas2.position(1000, 1000, 1000);
+      }
     }
   };
   p.windowResized = function () {
