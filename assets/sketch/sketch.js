@@ -69,7 +69,6 @@ function s1(p) {
     return h + heightOffset;
   };
 }
-
 function s2(p) {
   p.preload = function () {
     if (!postShowingvar) {
