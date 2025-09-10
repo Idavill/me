@@ -28,9 +28,13 @@ let postShowingvar = true;
 
 function s1(p) {
   p.setup = function () {
+    //contextReadFrequently = createCanvas(800, 600).elt.getContext('2d', { willReadFrequently: true });
+
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
+    //.elt.getContext("2d", { willReadFrequently: true });
+
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
 
     let openpost = p.select(".openpost-class");
@@ -139,21 +143,22 @@ function background(p) {
       .parent("pfive-container");
     canvas3.position(0, 0);
     canvas3.style("z-index", "-1");
-    p.angleMode(p.DEGREES);
+    //p.angleMode(p.DEGREES);
 
     p.shader(shaderExperiment);
+    p.noStroke();
     //theShader = p.createShader(vertexShader, fragmentShader);
 
-    p.background(255);
+    //p.background(255);
   };
   p.draw = function () {
-    p.background(255);
-
+    p.clear();
+    p.rect(0, 0, p.windowWidth, p.windowHeight);
+    //p.background(0);
     // send uniform values to the shader
     // theShader.setUniform("resolution", [400, 400]);
     // theShader.setUniform("time", p.millis() / 1000.0);
     // theShader.setUniform("mouse", [p.mouseX, p.map(p.mouseY, 0, 400, 400, 0)]);
-
     //p.shader(theShader);
     // add a sphere using the texture
     // p.translate(-150, 0, 0);
@@ -162,10 +167,9 @@ function background(p) {
     // p.rotateY(-p.mouseX);
     // p.sphere(125);
     // p.pop();
-
     // add an ellipse using the texture
     // passing a fifth parameter to ellipse for smooth edges in 3D
-    //p.ellipse(0, 0, 1000, 1000, 100);
+    //p.ellipse(0, 0, 500, 500, 50);
   };
 }
 
