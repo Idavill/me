@@ -10,6 +10,7 @@ let model;
 let canvas1;
 let canvas2;
 let canvas3;
+let canvas4;
 let pageHeight;
 let heightOffset = 170;
 let canvasSize = 400;
@@ -113,10 +114,15 @@ function s2(p) {
   p.draw = function () {
     if (!postShowingvar) {
       if (currentImage) {
+        p.tint(255, 255);
+        //p.show();
         canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
         p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
       } else {
-        canvas2.position(1000, 1000, 1000);
+        p.tint(255, 0);
+        //p.hide();
+        //p.remove();
+        //canvas2.position(1000, 1000, 1000);
       }
     }
   };
@@ -144,19 +150,19 @@ function background(p) {
       .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
       .parent("pfive-container");
     canvas3.position(0, 0);
-    canvas3.style("z-index", "-1");
+    canvas3.style("z-index", "-2");
     //p.angleMode(p.DEGREES);
 
     p.shader(shaderExperiment);
     p.noStroke();
     //theShader = p.createShader(vertexShader, fragmentShader);
-
     //p.background(255);
   };
   p.draw = function () {
     p.clear();
     p.rect(0, 0, p.windowWidth, p.windowHeight);
     shaderExperiment.setUniform("background", backgroundImageTest);
+
     //p.background(0);
     // send uniform values to the shader
     // theShader.setUniform("resolution", [400, 400]);
@@ -188,6 +194,26 @@ drawRandomCircle = function (titleid) {
   }
 };
 
-new p5(background);
+particlebackground = function (p) {
+  p.setup = function () {
+    canvas4 = p
+      .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
+      .parent("pfive-container");
+    canvas4.position(0, 0);
+    canvas4.style("z-index", "-1");
+
+    particle = new Particle(
+      p,
+      p.windowWidth / 4,
+      p.windowHeight / 4,
+      p.color(255, 204, 0)
+    );
+  };
+  p.draw = function () {
+    particle.draw();
+  };
+};
+
+new p5(particlebackground);
 new p5(s1);
 new p5(s2);
