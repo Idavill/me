@@ -200,7 +200,7 @@ particlebackground = function (p) {
       .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
       .parent("pfive-container");
     canvas4.position(0, 0);
-    canvas4.style("z-index", "-1");
+    canvas4.style("z-index", "0");
 
     particle = new Particle(
       p,
@@ -210,10 +210,12 @@ particlebackground = function (p) {
     );
   };
   p.draw = function () {
+    p.background(255, 100, 100);
+    particle.update();
     particle.draw();
   };
 };
 
 new p5(particlebackground);
-new p5(s1);
-new p5(s2);
+//new p5(s1);
+//new p5(s2);
