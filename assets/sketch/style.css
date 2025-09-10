@@ -265,9 +265,9 @@ table td {
 .site-title, .site-title:visited {
   color: var(--dark-blue);
 }
-/* .site-title, .site-title:hover {
-  color: var(--white);
-} */
+.site-title, .site-title:hover {
+  color: var(--brat-green);
+}
 
 .site-nav {
   float: right;

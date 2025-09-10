@@ -26,6 +26,8 @@ let currentImage = null;
 let previewImageSize = 400;
 let postShowingvar = true;
 
+let backgroundImageTest;
+
 function s1(p) {
   p.setup = function () {
     //contextReadFrequently = createCanvas(800, 600).elt.getContext('2d', { willReadFrequently: true });
@@ -138,6 +140,7 @@ function background(p) {
     );
   };
   p.setup = function () {
+    backgroundImageTest = p.loadImage("assets/images/weave1.jpg");
     canvas3 = p
       .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
       .parent("pfive-container");
@@ -154,6 +157,7 @@ function background(p) {
   p.draw = function () {
     p.clear();
     p.rect(0, 0, p.windowWidth, p.windowHeight);
+    shaderExperiment.setUniform("background", backgroundImageTest);
     //p.background(0);
     // send uniform values to the shader
     // theShader.setUniform("resolution", [400, 400]);
