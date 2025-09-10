@@ -1,3 +1,11 @@
+// try this shader https://p5js.org/examples/advanced-canvas-rendering-shader-as-a-texture/
+
+// this variable will hold our shader object
+let theShader;
+let shaderExperiment;
+// this variable will hold our createGraphics layer
+let shaderTexture;
+
 let model;
 let canvas1;
 let canvas2;
@@ -37,10 +45,10 @@ function s1(p) {
     if (postShowingvar) {
       p.remove();
     }
-    p.background(255, 192, 203);
+    //p.background(255, 192, 203);
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
-    p.orbitControl();
+    //p.orbitControl();
     p.translate(0, -40, 0);
     p.rotateY(p.frameCount * 0.001);
     p.sphere(120, 20, 10);
@@ -119,16 +127,45 @@ function s2(p) {
 }
 
 function background(p) {
+  p.preload = function () {
+    shaderExperiment = p.loadShader(
+      "assets/sketch/shader_experiment.vert",
+      "assets/sketch/shader_experiment.frag"
+    );
+  };
   p.setup = function () {
     canvas3 = p
-      .createCanvas(p.windowWidth, p.windowHeight)
+      .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
       .parent("pfive-container");
     canvas3.position(0, 0);
-    p.background(255);
     canvas3.style("z-index", "-1");
+    p.angleMode(p.DEGREES);
+
+    p.shader(shaderExperiment);
+    //theShader = p.createShader(vertexShader, fragmentShader);
+
+    p.background(255);
   };
   p.draw = function () {
-    p.circle(p.mouseX, p.mouseY, 50);
+    p.background(255);
+
+    // send uniform values to the shader
+    // theShader.setUniform("resolution", [400, 400]);
+    // theShader.setUniform("time", p.millis() / 1000.0);
+    // theShader.setUniform("mouse", [p.mouseX, p.map(p.mouseY, 0, 400, 400, 0)]);
+
+    //p.shader(theShader);
+    // add a sphere using the texture
+    // p.translate(-150, 0, 0);
+    // p.push();
+    // p.rotateX(-p.mouseY);
+    // p.rotateY(-p.mouseX);
+    // p.sphere(125);
+    // p.pop();
+
+    // add an ellipse using the texture
+    // passing a fifth parameter to ellipse for smooth edges in 3D
+    //p.ellipse(0, 0, 1000, 1000, 100);
   };
 }
 

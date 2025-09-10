@@ -254,6 +254,7 @@ table td {
 }
 
 .site-title {
+  color: var(--dark-blue);
   font-size: 26px;
   font-weight: 300;
   line-height: 40px;
@@ -264,9 +265,9 @@ table td {
 .site-title, .site-title:visited {
   color: var(--dark-blue);
 }
-.site-title, .site-title:hover {
+/* .site-title, .site-title:hover {
   color: var(--white);
-}
+} */
 
 .site-nav {
   float: right;
