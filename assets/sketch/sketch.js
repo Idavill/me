@@ -37,6 +37,7 @@ function s1(p) {
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
     //.elt.getContext("2d", { willReadFrequently: true });
+    canvas1.style("z-index", "-2");
 
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
 
@@ -108,6 +109,8 @@ function s2(p) {
       canvas2 = p
         .createCanvas(canvasSize, canvasSize)
         .parent("pfive-container");
+      canvas2.style("z-index", "-2");
+
       canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
     }
   };
@@ -202,30 +205,26 @@ particlebackground = function (p) {
   let placementH = p.windowHeight;
 
   p.preload = function () {
-    img = p.loadImage("assets/images/weave1.jpg");
+    img = p.loadImage("assets/images/13.jpg");
   };
   p.setup = function () {
     canvas4 = p
       .createCanvas(p.windowWidth, p.windowHeight)
       .parent("pfive-container");
     canvas4.position(0, 0);
-    canvas4.style("z-index", "0");
+    canvas4.style("z-index", "-3");
 
     placeParticles();
     p.noStroke();
   };
   p.draw = function () {
-    p.background(255, 100, 100);
+    p.background(img.get(100, 100), 0.0);
 
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
     }
-
-    console.log("particles 100: ", particles[100].y, particles[100].y);
-    //p.image(img, 0, 0, p.windowWidth, p.windowHeight);
-    //console.log("mouseposition: ", p.mouseX, p.mouseY);
-    //console.log("windowwidht and height : ", p.windowWidth, p.windowWidth);
+    //p.background(51, 0.0);
   };
 
   function placeParticles() {
@@ -264,15 +263,15 @@ particlebackground = function (p) {
       let homeD = this.p.dist(this.x, this.y, this.homeX, this.homeY);
       let homeA = this.p.atan2(this.homeY - this.y, this.homeX - this.x);
       // forces
-      let mouseF = this.p.constrain(this.p.map(mouseD, 0, 100, 10, 0), 0, 10);
+      let mouseF = this.p.constrain(this.p.map(mouseD, 0, 200, 10, 0), 0, 10);
       //console.log(mouseF);
       //let mouseF = this.p.map(mouseD, 0, 100, 10, 0);
       let homeF = this.p.map(homeD, 0, 100, 0, 10);
 
-      let vx = this.p.cos(mouseA) * mouseF * mouseF;
+      let vx = (this.p.cos(mouseA) * mouseF) / 8;
       vx += this.p.cos(homeA) * homeF;
 
-      let vy = this.p.sin(mouseA) * mouseF;
+      let vy = (this.p.sin(mouseA) * mouseF) / 8;
       vy += this.p.sin(homeA) * homeF;
 
       this.x += vx;
@@ -287,5 +286,5 @@ particlebackground = function (p) {
 };
 
 new p5(particlebackground);
-//new p5(s1);
-//new p5(s2);
+new p5(s1);
+new p5(s2);
