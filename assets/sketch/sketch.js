@@ -195,25 +195,95 @@ drawRandomCircle = function (titleid) {
 };
 
 particlebackground = function (p) {
+  let img;
+  let particles = [];
+  let res = 12;
+  let placementW = p.windowWidth;
+  let placementH = p.windowHeight;
+
+  p.preload = function () {
+    img = p.loadImage("assets/images/weave1.jpg");
+  };
   p.setup = function () {
     canvas4 = p
-      .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
+      .createCanvas(p.windowWidth, p.windowHeight)
       .parent("pfive-container");
     canvas4.position(0, 0);
     canvas4.style("z-index", "0");
 
-    particle = new Particle(
-      p,
-      p.windowWidth / 4,
-      p.windowHeight / 4,
-      p.color(255, 204, 0)
-    );
+    placeParticles();
+    p.noStroke();
   };
   p.draw = function () {
     p.background(255, 100, 100);
-    particle.update();
-    particle.draw();
+
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+
+    console.log("particles 100: ", particles[100].y, particles[100].y);
+    //p.image(img, 0, 0, p.windowWidth, p.windowHeight);
+    //console.log("mouseposition: ", p.mouseX, p.mouseY);
+    //console.log("windowwidht and height : ", p.windowWidth, p.windowWidth);
   };
+
+  function placeParticles() {
+    for (let i = 0; i < p.width; i += res) {
+      for (let j = 0; j < p.height; j += res) {
+        let x = (i / p.width) * img.width;
+        let y = (j / p.height) * img.height;
+        let c = img.get(x, y);
+
+        // if(c[3] != 0) {
+        if (c[0] + c[1] + c[2] != 255 * 3) {
+          particles.push(new Particle(p, i, j, c, res));
+        }
+      }
+    }
+  }
+
+  class Particle {
+    constructor(p, x, y, color, res) {
+      this.res = res;
+      this.p = p;
+      this.x = x;
+      this.y = y;
+
+      this.homeX = x;
+      this.homeY = y;
+
+      this.color = color;
+    }
+
+    update() {
+      // mouse
+      let mouseD = this.p.dist(this.x, this.y, this.p.mouseX, this.p.mouseY);
+      let mouseA = this.p.atan2(this.y - this.p.mouseY, this.x - this.p.mouseX);
+      // home
+      let homeD = this.p.dist(this.x, this.y, this.homeX, this.homeY);
+      let homeA = this.p.atan2(this.homeY - this.y, this.homeX - this.x);
+      // forces
+      let mouseF = this.p.constrain(this.p.map(mouseD, 0, 100, 10, 0), 0, 10);
+      //console.log(mouseF);
+      //let mouseF = this.p.map(mouseD, 0, 100, 10, 0);
+      let homeF = this.p.map(homeD, 0, 100, 0, 10);
+
+      let vx = this.p.cos(mouseA) * mouseF * mouseF;
+      vx += this.p.cos(homeA) * homeF;
+
+      let vy = this.p.sin(mouseA) * mouseF;
+      vy += this.p.sin(homeA) * homeF;
+
+      this.x += vx;
+      this.y += vy;
+    }
+
+    draw() {
+      this.p.fill(this.color);
+      this.p.ellipse(this.x, this.y, this.res, this.res);
+    }
+  }
 };
 
 new p5(particlebackground);
