@@ -4,6 +4,8 @@
   --calm-blue:rgb(82, 120, 223);
   --white:rgb(255, 192, 203,0.9);
   --red:rgb(255, 38, 74);
+  --plum:rgb(131,96,135);
+  --orange:rgb(238,124,1);
 }
 
 /**
@@ -24,7 +26,7 @@ body {
   font: 400 16px/1.5 -apple-system, "Google Sans Code",  BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: var(--calm-blue);
   /* background-color: #fdfdfd; */
-  background-color: pink !important;
+  /* background-color: pink !important; */
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
   -moz-font-feature-settings: "kern" 1;
@@ -103,23 +105,22 @@ h1, h2, h3, h4, h5, h6 {
  * Links
  */
 a {
-  color: var(--dark-blue);
+  color: var(--orange);
   text-decoration: none;
-  background-color: var(--white);
-  width:max-content;
-  border: 2px solid var(--white);
+  background-color: var(--plum);
+  width:370px;
+  border: 2px solid var(--plum);
   border-radius: 5px;
   padding-left: 20px;
   padding-right: 20px;
 }
 a:visited {
-  color: var(--dark-blue);
+  color: var(--orange);
 }
 a:hover {
   color: var(--brat-green);
   background-color: var(--dark-blue);
   border: 2px solid var(--dark-blue);
-
   text-decoration: none;
 }
 .social-media-list a:hover {
@@ -254,7 +255,7 @@ table td {
 }
 
 .site-title {
-  color: var(--dark-blue);
+  color: var(--orange);
   font-size: 26px;
   font-weight: 300;
   line-height: 40px;
@@ -263,7 +264,7 @@ table td {
   float: left;
 }
 .site-title, .site-title:visited {
-  color: var(--dark-blue);
+  color: var(--orange);
 }
 .site-title, .site-title:hover {
   color: var(--brat-green);
@@ -280,11 +281,11 @@ table td {
   display: none;
 }
 .site-nav .page-link {
-  color: var(--dark-blue);
+  color: var(--orange);
   line-height: 1.5;
 }
 .site-nav .page-link:hover {
-  color: var(--white);
+  color: var(plum);
   line-height: 1.5;
 }
 
@@ -446,8 +447,8 @@ table td {
 
 .post-title {
   color:var(--dark-blue);
-  background-color: var(--white);
-  border: 2px solid var(--white);
+  background-color: var(plum);
+  border: 2px solid var(plum);
   width:max-content;
   border-radius: 5px;
   padding-left: 20px;

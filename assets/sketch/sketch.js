@@ -17,6 +17,7 @@ let canvasSize = 400;
 let particles;
 let titleId;
 let imageMap = new Map();
+let img;
 let img1;
 let img2;
 let img3;
@@ -28,11 +29,11 @@ let previewImageSize = 400;
 let postShowingvar = true;
 
 let backgroundImageTest;
+let testheadline1;
 
 function s1(p) {
   p.setup = function () {
     //contextReadFrequently = createCanvas(800, 600).elt.getContext('2d', { willReadFrequently: true });
-
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
@@ -63,6 +64,7 @@ function s1(p) {
   };
   p.windowResized = function () {
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight);
+    determineHeadlineColor(p, img);
     console.log("window resized!");
   };
   calculateHeight = function () {
@@ -131,6 +133,8 @@ function s2(p) {
   };
   p.windowResized = function () {
     canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+    img.resize(p.windowWidth, p.windowHeight);
+
     console.log("window resized!");
   };
   calculateHeight = function () {
@@ -197,17 +201,41 @@ drawRandomCircle = function (titleid) {
   }
 };
 
+determineHeadlineColor = function (p, img) {
+  postlink = p.selectAll(".post-link");
+  sitetitle = p.select(".site-title");
+  about = p.select(".page-link");
+  social = p.select(".social");
+
+  determineColor(p, sitetitle);
+  determineColor(p, about);
+
+  if (postlink !== undefined) {
+    postlink.forEach((elm) => {
+      determineColor(p, elm);
+    });
+  }
+};
+
+determineColor = function (p, element) {
+  colorOffset = 0;
+  elementHtml = element.elt.getBoundingClientRect();
+  x = (elementHtml.x / p.windowWidth) * img.width;
+  y = (elementHtml.y / p.windowHeight) * img.height;
+  color = `rgb(${img.get(x + colorOffset, y)})`;
+  element.style("background", color);
+};
+
 particlebackground = function (p) {
-  let img;
   let particles = [];
   let res = 12;
-  let placementW = p.windowWidth;
-  let placementH = p.windowHeight;
 
   p.preload = function () {
     img = p.loadImage("assets/images/13.jpg");
   };
   p.setup = function () {
+    determineHeadlineColor(p, img);
+
     canvas4 = p
       .createCanvas(p.windowWidth, p.windowHeight)
       .parent("pfive-container");
@@ -216,10 +244,23 @@ particlebackground = function (p) {
 
     placeParticles();
     p.noStroke();
+
+    img.resize(p.windowWidth, p.windowHeight);
+    // p.image(
+    //   img,
+    //   0,
+    //   0,
+    //   p.width,
+    //   p.height,
+    //   0,
+    //   0,
+    //   img.width,
+    //   img.height,
+    //   p.CONTAIN
+    // );
   };
   p.draw = function () {
-    p.background(img.get(100, 100), 0.0);
-
+    //p.background(img.get(100, 100), 0.0);
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
