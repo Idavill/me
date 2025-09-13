@@ -12,7 +12,7 @@ let canvas2;
 let canvas3;
 let canvas4;
 let pageHeight = 100;
-let heightOffset = 170;
+let heightOffset = 300; // 170
 let canvasSize = 400;
 let particles;
 let titleId;
@@ -25,7 +25,7 @@ let img4;
 let img5;
 let currentGraphics = null;
 let currentImage = null;
-let previewImageSize = 400;
+let previewImageSize = 390;
 let postShowingvar = true;
 
 let backgroundImageTest;
@@ -39,6 +39,8 @@ function s1(p) {
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
     canvas1.style("z-index", "-2");
+    // canvas1.style("box-shadow", "10px 10px");
+
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
 
     let openpost = p.select(".openpost-class");
@@ -59,11 +61,6 @@ function s1(p) {
     p.translate(0, -40, 0);
     p.rotateY(p.frameCount * 0.001);
     p.sphere(120, 20, 10);
-  };
-  p.windowResized = function () {
-    canvas1.position(p.windowWidth / 2 + 100, calculateHeight);
-    determineHeadlineColor(p, img);
-    console.log("window resized!");
   };
   calculateHeight = function () {
     let halfh = p.windowHeight / 2;
@@ -110,6 +107,17 @@ function s2(p) {
         .createCanvas(canvasSize, canvasSize)
         .parent("pfive-container");
       canvas2.style("z-index", "-2");
+      //canvas2.style("position", "fixed");
+      // p5container = p.select("#pfive-container");
+      // console.log("p5 container: ", p5container);
+      // p5container.style("width", `${previewImageSize}px`);
+      // p5container.style("height", `${previewImageSize}px`);
+      // p5container.style("position", "fixed");
+      // p5container.style("z-index", "-2");
+      // p5container.style("left", `${p.windowWidth / 2 + 100}px`);
+      // p5container.style("top", `${calculateHeight()}px`);
+      // //p5container.style("background", "red");
+      // p5container.style("box-shadow", "20px 20px");
 
       canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
     }
@@ -152,34 +160,13 @@ function background(p) {
       .parent("pfive-container");
     canvas3.position(0, 0);
     canvas3.style("z-index", "-2");
-    //p.angleMode(p.DEGREES);
-
     p.shader(shaderExperiment);
     p.noStroke();
-    //theShader = p.createShader(vertexShader, fragmentShader);
-    //p.background(255);
   };
   p.draw = function () {
     p.clear();
     p.rect(0, 0, p.windowWidth, p.windowHeight);
     shaderExperiment.setUniform("background", backgroundImageTest);
-
-    //p.background(0);
-    // send uniform values to the shader
-    // theShader.setUniform("resolution", [400, 400]);
-    // theShader.setUniform("time", p.millis() / 1000.0);
-    // theShader.setUniform("mouse", [p.mouseX, p.map(p.mouseY, 0, 400, 400, 0)]);
-    //p.shader(theShader);
-    // add a sphere using the texture
-    // p.translate(-150, 0, 0);
-    // p.push();
-    // p.rotateX(-p.mouseY);
-    // p.rotateY(-p.mouseX);
-    // p.sphere(125);
-    // p.pop();
-    // add an ellipse using the texture
-    // passing a fifth parameter to ellipse for smooth edges in 3D
-    //p.ellipse(0, 0, 500, 500, 50);
   };
 }
 
@@ -199,16 +186,20 @@ determineHeadlineColor = function (p, img) {
   postlink = p.selectAll(".post-link");
   sitetitle = p.select(".site-title");
   about = p.select(".page-link");
-  social = p.select(".social");
+  social = p.select(".social-media-list");
+  // console.log("span username :", span);
 
   determineColor(p, sitetitle);
   determineColor(p, about);
+  determineColor(p, social);
 
   if (postlink !== undefined) {
     postlink.forEach((elm) => {
       determineColor(p, elm);
     });
   }
+
+  social.style("width", "150px");
 };
 
 determineColor = function (p, element) {
@@ -230,7 +221,6 @@ determineColor = function (p, element) {
       .slice(1);
 
   readbleContrastingColor = getReadableContrastColor(hexcolor, palette);
-  console.log("pureColor: ", pureColor);
   element.style("color", `${readbleContrastingColor}`);
 };
 
@@ -312,41 +302,29 @@ particlebackground = function (p) {
     determineHeadlineColor(p, img);
     canvas4 = p
       .createCanvas(p.windowWidth, p.windowHeight)
-      .parent("pfive-container");
+      .parent("pfive-container-background");
     canvas4.position(0, 0);
     canvas4.style("z-index", "-3");
-
     placeParticles();
     p.noStroke();
 
     img.resize(p.windowWidth, pageHeight);
-    // p.image(
-    //   img,
-    //   0,
-    //   0,
-    //   p.width,
-    //   p.height,
-    //   0,
-    //   0,
-    //   img.width,
-    //   img.height,
-    //   p.CONTAIN
-    // );
-    // let a = img.get(0, 0);
-    // let b = img.get(100, 100);
-    // let c = img.get(500, 500);
-
-    // let a1 = convertToHex(a[0], a[1], a[2]);
-    // let b1 = convertToHex(b[0], b[1], b[2]);
-    // let c1 = convertToHex(c[0], c[1], c[2]);
-
-    // palette.push(a1, b1, c1);
   };
   p.draw = function () {
+    paintParticles();
+  };
+  paintParticles = function () {
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
     }
+  };
+  p.windowResized = function () {
+    canvas1.position(p.windowWidth / 2 + 100, calculateHeight);
+    determineHeadlineColor(p, img);
+    img.resize(p.windowWidth, pageHeight);
+    paintParticles();
+    console.log("window resized!");
   };
 
   function placeParticles() {
