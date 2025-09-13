@@ -31,7 +31,7 @@ let postShowingvar = true;
 let backgroundImageTest;
 let testheadline1;
 
-let palette = ["#00264cff", "#3e713eff", "#ff60ffff"];
+let palette = ["#3c93eaff", "#ffaf25ff", "#ff60ffff", "#1c2dbeff"];
 
 function s1(p) {
   p.setup = function () {
@@ -212,6 +212,7 @@ determineHeadlineColor = function (p, img) {
 };
 
 determineColor = function (p, element) {
+  addPictureColors();
   colorOffset = 0;
   elementHtml = element.elt.getBoundingClientRect();
   x = (elementHtml.x / p.windowWidth) * img.width;
@@ -220,9 +221,7 @@ determineColor = function (p, element) {
   color = `rgb(${pureColor})`;
   element.style("background", color);
   element.style("border", `border: 2px solid ${color}`);
-  element.style("border-radius", "25px");
-  contrastColor = getContrastYIQ(pureColor[0], pureColor[1], pureColor[2]);
-  //palette = ["#00264cff", "#3e713eff", "#ff60ffff"];
+  element.style("border-radius", "5px");
   hexcolor =
     "#" +
     ((1 << 24) | (pureColor[0] << 16) | (pureColor[1] << 8) | pureColor[2])
@@ -234,20 +233,21 @@ determineColor = function (p, element) {
   element.style("color", `${readbleContrastingColor}`);
 };
 
-function getContrastYIQ(r, g, b) {
-  console.log("r g b ");
-  hexcolor = "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
-
-  let newr = parseInt(hexcolor.substr(1, 2), 16);
-  let newg = parseInt(hexcolor.substr(3, 2), 16);
-  let newb = parseInt(hexcolor.substr(5, 2), 16);
-  let yiq = (newr * 299 + newg * 587 + newb * 114) / 1000;
-  return yiq >= 128 ? "#000" : "#fff";
-}
-
 function convertToHex(r, g, b) {
   return (hexcolor =
     "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1));
+}
+
+function addPictureColors() {
+  let a = img.get(0, 0);
+  let b = img.get(100, 100);
+  let c = img.get(500, 500);
+
+  let a1 = convertToHex(a[0] / 2, a[1] / 2, a[2] / 2);
+  let b1 = convertToHex(b[0] / 2, b[1] / 2, b[2] / 2);
+  let c1 = convertToHex(c[0] / 2, c[1] / 2, c[2] / 2);
+
+  palette.push(a1, b1, c1);
 }
 
 function getReadableContrastColor(baseHex, palette) {
@@ -305,7 +305,7 @@ particlebackground = function (p) {
   let res = 12;
 
   p.preload = function () {
-    img = p.loadImage("assets/images/13.jpg");
+    img = p.loadImage("assets/images/18.jpg"); //17!
   };
   p.setup = function () {
     determineHeadlineColor(p, img);
@@ -331,15 +331,15 @@ particlebackground = function (p) {
     //   img.height,
     //   p.CONTAIN
     // );
-    let a = img.get(0, 0);
-    let b = img.get(100, 100);
-    let c = img.get(500, 500);
+    // let a = img.get(0, 0);
+    // let b = img.get(100, 100);
+    // let c = img.get(500, 500);
 
-    let a1 = convertToHex(a[0], a[1], a[2]);
-    let b1 = convertToHex(b[0], b[1], b[2]);
-    let c1 = convertToHex(c[0], c[1], c[2]);
+    // let a1 = convertToHex(a[0], a[1], a[2]);
+    // let b1 = convertToHex(b[0], b[1], b[2]);
+    // let c1 = convertToHex(c[0], c[1], c[2]);
 
-    palette.push(a1, b1, c1);
+    // palette.push(a1, b1, c1);
   };
   p.draw = function () {
     for (let i = 0; i < particles.length; i++) {
