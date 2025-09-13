@@ -1,6 +1,6 @@
 :root {
   --brat-green: #76d81a;
-  --dark-blue:rgb(31, 15, 255);
+  --dark-blue:#1f0fff;
   --calm-blue:rgb(82, 120, 223);
   --white:rgb(255, 192, 203,0.9);
   --red:rgb(255, 38, 74);
@@ -101,11 +101,23 @@ h1, h2, h3, h4, h5, h6 {
   height:300px;
 }
 
+.drop-shadow{
+  position:absolute;
+  width:390px;
+  height:390px;
+  background-color:rgb(247, 161, 47);
+  box-shadow: 20px 20px #5263c1;
+  border: 0px solid black;
+  border-radius: 5px;
+  z-index: -3;
+  right:250px;
+}
+
 /**
  * Links
  */
 a {
-  color: none;
+  /* color: none; */
   text-decoration: none;
   background-color: none;
   width:370px;
@@ -115,7 +127,7 @@ a {
   padding-right: 20px;
 }
 a:visited {
-  color: var(--orange);
+  color: none;
 }
 a:hover {
   color: var(--brat-green);
@@ -123,15 +135,17 @@ a:hover {
   /* border: 2px solid; */
   text-decoration: none;
 }
-.social-media-list a:hover {
+/* .social-media-list a:hover {
+  color: var(--brat-green);
   text-decoration: none;
   /* padding-left: 20px;
-  padding-right: 20px; */
+  padding-right: 20px; 
 
 }
-.social-media-list a:hover .username {
+/* .social-media-list a:hover .username {
+  color: var(--brat-green);
   text-decoration: none;
-}
+} */
 
 /**
  * Blockquotes
@@ -258,7 +272,7 @@ table td {
 }
 
 .site-title {
-  color: var(--orange);
+  color: none;
   font-size: 26px;
   font-weight: 300;
   line-height: 40px;
@@ -266,11 +280,11 @@ table td {
   margin-bottom: 0;
   float: left;
 }
-.site-title, .site-title:visited {
-  color: var(--orange);
-}
-.site-title, .site-title:hover {
-  color: var(--brat-green);
+/* .site-title, .site-title:visited {
+  color: none;
+} */
+.site-title:hover {
+  color: var(--brat-green) !important;
 }
 
 .site-nav {
@@ -285,11 +299,11 @@ table td {
 }
 .site-nav .page-link {
   position:relative;
-  color: var(--orange);
+  color: none;
   line-height: 1.5;
 }
 .site-nav .page-link:hover {
-  color: var(plum);
+  color: var(--brat-green);
   line-height: 1.5;
 }
 
@@ -362,6 +376,9 @@ table td {
 .social-media-list {
   list-style: none;
   margin-left: 0;
+}
+.social-media-list:hover{
+  color: var(--brat-green);
 }
 
 .footer-col-wrapper {

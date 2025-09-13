@@ -31,6 +31,8 @@ let postShowingvar = true;
 let backgroundImageTest;
 let testheadline1;
 
+let dropShadow;
+
 let palette = ["#3c93eaff", "#ffaf25ff", "#ff60ffff", "#1c2dbeff"];
 
 function s1(p) {
@@ -40,6 +42,8 @@ function s1(p) {
       .parent("pfive-container");
     canvas1.style("z-index", "-2");
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
+    dropShadow = p.select(".drop-shadow");
+    dropShadow.position(p.windowWidth / 2 + 100, calculateHeight(p));
 
     let openpost = p.select(".openpost-class");
     if (openpost) {
@@ -54,7 +58,7 @@ function s1(p) {
     }
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
-    p.translate(0, -40, 0);
+    p.translate(0, 0, 0); // -04 y
     p.rotateY(p.frameCount * 0.001);
     p.sphere(120, 20, 10);
   };
@@ -315,6 +319,7 @@ particlebackground = function (p) {
   p.windowResized = function () {
     p.resizeCanvas(p.windowWidth, pageHeight);
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
+    dropShadow.position(p.windowWidth / 2 + 100, calculateHeight(p));
     determineHeadlineColor(p, img);
     img.resize(p.windowWidth, pageHeight);
     paintParticles();
