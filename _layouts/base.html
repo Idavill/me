@@ -12,27 +12,29 @@
     <meta charset="utf-8" />
   </head>  
   <body>
-    <div id="pfive-container"></div>
-     <div id="pfive-container-background"></div>
-    {%- include header.html -%}
-    
-    <main class="page-content" aria-label="Content">
-      <div class="script">
-      </div>
-              <div class="drop-shadow"></div>
-
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </main>
-    
-    {%- include footer.html -%}
-    
-    {%- include sub-footer.html -%}
-    <script src="{{ '/assets/sketch/sketch.js' | relative_url }}"></script>
-    <script src="{{ '/assets/sketch/particles.js' | relative_url }}"></script>
-
-
+    <div class="loader">welcome</div>
+    <div class="all-content">
+      <div id="pfive-container"></div>
+       <div id="pfive-container-background"></div>
+      {%- include header.html -%}
+      
+      <main class="page-content" aria-label="Content">
+        <div class="script">
+  
+        </div>
+                <div class="drop-shadow"></div>
+  
+        <div class="wrapper">
+          {{ content }}
+        </div>
+      </main>
+      
+      {%- include footer.html -%}
+      
+      {%- include sub-footer.html -%}
+      <script src="{{ '/assets/sketch/sketch.js' | relative_url }}"></script>
+      <script src="{{ '/assets/sketch/particles.js' | relative_url }}"></script>
+    </div>
   </body>
 
 </html>

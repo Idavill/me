@@ -36,7 +36,50 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  /* animation: fadeInAnimation ease 5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards; */
 }
+
+.loader{
+  display:flex;
+  align-self:center;
+  /* justify-self: center; */
+  top:300px;
+    animation: fadeOutAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.all-content{
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+  @keyframes fadeInAnimation {
+      0% {
+          opacity: 0;
+      }
+      50% {
+          opacity: 0;
+      }
+      100% {
+          opacity: 1;
+      }
+  }
+
+    @keyframes fadeOutAnimation {
+      0% {
+          opacity: 1;
+      }
+      50% {
+          opacity: 1;
+      }
+      100% {
+          opacity: 0;
+      }
+  }
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
@@ -92,6 +135,15 @@ li > ol {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
+
+/* .fade-enter {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+.fade-enter-active {
+  opacity: 1;
+} */
+
 
 .image-gallery {
   position: fixed;
@@ -298,6 +350,7 @@ table td {
   display: none;
 }
 .site-nav .page-link {
+  display:flex;
   position:relative;
   color: none;
   line-height: 1.5;

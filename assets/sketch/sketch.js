@@ -33,6 +33,9 @@ let testheadline1;
 
 let dropShadow;
 
+let opacity = 0;
+let transitioning = false;
+
 let palette = ["#3c93eaff", "#ffaf25ff", "#ff60ffff", "#1c2dbeff"];
 
 function s1(p) {
@@ -55,14 +58,18 @@ function s1(p) {
   p.draw = function () {
     if (postShowingvar) {
       canvas1.style("opacity", "0%");
+      dropShadow.style("opacity", "0%");
     } else {
       canvas1.style("opacity", "100%");
+      dropShadow.style("opacity", "100%");
     }
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
+    //p.spotLight(100, 100, 0);
     p.translate(0, 0, 0); // -04 y
     p.rotateY(p.frameCount * 0.001);
     p.sphere(120, 20, 10);
+    //p.sphere.computeNormals();
   };
 }
 function s2(p) {
@@ -104,18 +111,6 @@ function s2(p) {
         .createCanvas(canvasSize, canvasSize)
         .parent("pfive-container");
       canvas2.style("z-index", "-2");
-      //canvas2.style("position", "fixed");
-      // p5container = p.select("#pfive-container");
-      // console.log("p5 container: ", p5container);
-      // p5container.style("width", `${previewImageSize}px`);
-      // p5container.style("height", `${previewImageSize}px`);
-      // p5container.style("position", "fixed");
-      // p5container.style("z-index", "-2");
-      // p5container.style("left", `${p.windowWidth / 2 + 100}px`);
-      // p5container.style("top", `${calculateHeight()}px`);
-      // //p5container.style("background", "red");
-      // p5container.style("box-shadow", "20px 20px");
-
       canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
     }
   };
@@ -205,6 +200,9 @@ determineHeadlineColor = function (p, img) {
   }
 
   social.style("width", "150px");
+  social.style("padding", "10px");
+  about.style("padding", "10px");
+  about.style("width", "150px");
 };
 
 determineColor = function (p, element) {
