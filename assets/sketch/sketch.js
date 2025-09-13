@@ -11,7 +11,7 @@ let canvas1;
 let canvas2;
 let canvas3;
 let canvas4;
-let pageHeight;
+let pageHeight = 100;
 let heightOffset = 170;
 let canvasSize = 400;
 let particles;
@@ -127,7 +127,7 @@ function s2(p) {
   };
   p.windowResized = function () {
     canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
-    img.resize(p.windowWidth, p.windowHeight);
+    img.resize(p.windowWidth, pageHeight);
 
     console.log("window resized!");
   };
@@ -212,7 +212,7 @@ determineHeadlineColor = function (p, img) {
 };
 
 determineColor = function (p, element) {
-  addPictureColors();
+  //addPictureColors();
   colorOffset = 0;
   elementHtml = element.elt.getBoundingClientRect();
   x = (elementHtml.x / p.windowWidth) * img.width;
@@ -222,6 +222,7 @@ determineColor = function (p, element) {
   element.style("background", color);
   element.style("border", `border: 2px solid ${color}`);
   element.style("border-radius", "5px");
+  element.style("box-shadow", "10px 10px");
   hexcolor =
     "#" +
     ((1 << 24) | (pureColor[0] << 16) | (pureColor[1] << 8) | pureColor[2])
@@ -318,7 +319,7 @@ particlebackground = function (p) {
     placeParticles();
     p.noStroke();
 
-    img.resize(p.windowWidth, p.windowHeight);
+    img.resize(p.windowWidth, pageHeight);
     // p.image(
     //   img,
     //   0,
