@@ -31,15 +31,14 @@ let postShowingvar = true;
 let backgroundImageTest;
 let testheadline1;
 
+let palette = ["#00264cff", "#3e713eff", "#ff60ffff"];
+
 function s1(p) {
   p.setup = function () {
-    //contextReadFrequently = createCanvas(800, 600).elt.getContext('2d', { willReadFrequently: true });
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
-    //.elt.getContext("2d", { willReadFrequently: true });
     canvas1.style("z-index", "-2");
-
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
 
     let openpost = p.select(".openpost-class");
@@ -48,7 +47,6 @@ function s1(p) {
     } else {
       postShowingvar = false;
     }
-    //model = p.loadModel("/me/assets/models/by.obj", { normalize: true });
   };
   p.draw = function () {
     if (postShowingvar) {
@@ -120,14 +118,10 @@ function s2(p) {
     if (!postShowingvar) {
       if (currentImage) {
         p.tint(255, 255);
-        //p.show();
         canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
         p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
       } else {
         p.tint(255, 0);
-        //p.hide();
-        //p.remove();
-        //canvas2.position(1000, 1000, 1000);
       }
     }
   };
@@ -222,9 +216,89 @@ determineColor = function (p, element) {
   elementHtml = element.elt.getBoundingClientRect();
   x = (elementHtml.x / p.windowWidth) * img.width;
   y = (elementHtml.y / p.windowHeight) * img.height;
-  color = `rgb(${img.get(x + colorOffset, y)})`;
+  pureColor = img.get(x + colorOffset, y);
+  color = `rgb(${pureColor})`;
   element.style("background", color);
+  element.style("border", `border: 2px solid ${color}`);
+  element.style("border-radius", "25px");
+  contrastColor = getContrastYIQ(pureColor[0], pureColor[1], pureColor[2]);
+  //palette = ["#00264cff", "#3e713eff", "#ff60ffff"];
+  hexcolor =
+    "#" +
+    ((1 << 24) | (pureColor[0] << 16) | (pureColor[1] << 8) | pureColor[2])
+      .toString(16)
+      .slice(1);
+
+  readbleContrastingColor = getReadableContrastColor(hexcolor, palette);
+  console.log("pureColor: ", pureColor);
+  element.style("color", `${readbleContrastingColor}`);
 };
+
+function getContrastYIQ(r, g, b) {
+  console.log("r g b ");
+  hexcolor = "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+
+  let newr = parseInt(hexcolor.substr(1, 2), 16);
+  let newg = parseInt(hexcolor.substr(3, 2), 16);
+  let newb = parseInt(hexcolor.substr(5, 2), 16);
+  let yiq = (newr * 299 + newg * 587 + newb * 114) / 1000;
+  return yiq >= 128 ? "#000" : "#fff";
+}
+
+function convertToHex(r, g, b) {
+  return (hexcolor =
+    "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1));
+}
+
+function getReadableContrastColor(baseHex, palette) {
+  console.log("pallette: ", palette);
+  function luminance(r, g, b) {
+    let a = [r, g, b].map((v) => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+
+  function contrast(hex1, hex2) {
+    let rgb1 = hexToRgb(hex1);
+    let rgb2 = hexToRgb(hex2);
+    let lum1 = luminance(rgb1.r, rgb1.g, rgb1.b);
+    let lum2 = luminance(rgb2.r, rgb2.g, rgb2.b);
+    let brightest = Math.max(lum1, lum2);
+    let darkest = Math.min(lum1, lum2);
+    return (brightest + 0.05) / (darkest + 0.05);
+  }
+
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    if (hex.length === 3)
+      hex = hex
+        .split("")
+        .map((c) => c + c)
+        .join("");
+    let bigint = parseInt(hex, 16);
+    return {
+      r: (bigint >> 16) & 255,
+      g: (bigint >> 8) & 255,
+      b: bigint & 255,
+    };
+  }
+
+  let bestColor = null;
+  let bestContrast = 0;
+
+  console.log("pallette: ", palette);
+  for (let color of palette) {
+    let cRatio = contrast(baseHex, color);
+    if (cRatio > bestContrast && cRatio >= 4.5) {
+      bestContrast = cRatio;
+      bestColor = color;
+    }
+  }
+
+  return bestColor; //|| "#000"; // fallback
+}
 
 particlebackground = function (p) {
   let particles = [];
@@ -235,7 +309,6 @@ particlebackground = function (p) {
   };
   p.setup = function () {
     determineHeadlineColor(p, img);
-
     canvas4 = p
       .createCanvas(p.windowWidth, p.windowHeight)
       .parent("pfive-container");
@@ -258,14 +331,21 @@ particlebackground = function (p) {
     //   img.height,
     //   p.CONTAIN
     // );
+    let a = img.get(0, 0);
+    let b = img.get(100, 100);
+    let c = img.get(500, 500);
+
+    let a1 = convertToHex(a[0], a[1], a[2]);
+    let b1 = convertToHex(b[0], b[1], b[2]);
+    let c1 = convertToHex(c[0], c[1], c[2]);
+
+    palette.push(a1, b1, c1);
   };
   p.draw = function () {
-    //p.background(img.get(100, 100), 0.0);
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
     }
-    //p.background(51, 0.0);
   };
 
   function placeParticles() {
@@ -275,7 +355,6 @@ particlebackground = function (p) {
         let y = (j / p.height) * img.height;
         let c = img.get(x, y);
 
-        // if(c[3] != 0) {
         if (c[0] + c[1] + c[2] != 255 * 3) {
           particles.push(new Particle(p, i, j, c, res));
         }

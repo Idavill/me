@@ -105,12 +105,12 @@ h1, h2, h3, h4, h5, h6 {
  * Links
  */
 a {
-  color: var(--orange);
+  color: contrast-color(var(--orange));
   text-decoration: none;
   background-color: var(--plum);
   width:370px;
-  border: 2px solid var(--plum);
-  border-radius: 5px;
+  border: none ;
+  border-radius: none;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -120,7 +120,7 @@ a:visited {
 a:hover {
   color: var(--brat-green);
   background-color: var(--dark-blue);
-  border: 2px solid var(--dark-blue);
+  /* border: 2px solid; */
   text-decoration: none;
 }
 .social-media-list a:hover {
@@ -448,9 +448,9 @@ table td {
 .post-title {
   color:var(--dark-blue);
   background-color: var(plum);
-  border: 2px solid var(plum);
+  border: none;
   width:max-content;
-  border-radius: 5px;
+  border-radius: none;
   padding-left: 20px;
   padding-right: 20px;
   padding-top:10px;
