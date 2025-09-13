@@ -67,7 +67,7 @@ function s1(p) {
     p.ambientLight(c);
     //p.spotLight(100, 100, 0);
     p.translate(0, 0, 0); // -04 y
-    p.rotateY(p.frameCount * 0.001);
+    p.rotateY(p.frameCount * 0.003);
     p.sphere(120, 20, 10);
     //p.sphere.computeNormals();
   };
@@ -75,19 +75,27 @@ function s1(p) {
 function s2(p) {
   p.preload = function () {
     if (!postShowingvar) {
-      img1 = p.loadImage("assets/images/mm.gif", handleImage, handleError);
+      img1 = p.loadImage("/me/assets/images/mm.gif", handleImage, handleError);
       img2 = p.loadImage(
-        "assets/images/sentinel.gif",
+        "/me/assets/images/sentinel.gif",
         handleImage,
         handleError
       );
       img3 = p.loadImage(
-        "assets/images/ideadots.png",
+        "/me/assets/images/ideadots.png",
         handleImage,
         handleError
       );
-      img4 = p.loadImage("assets/images/fauna2.gif", handleImage, handleError);
-      img5 = p.loadImage("assets/images/flax2.png", handleImage, handleError);
+      img4 = p.loadImage(
+        "/me/assets/images/fauna2.gif",
+        handleImage,
+        handleError
+      );
+      img5 = p.loadImage(
+        "/me/assets/images/flax2.png",
+        handleImage,
+        handleError
+      );
     }
   };
   function handleImage(img) {
@@ -127,28 +135,17 @@ function s2(p) {
       }
     }
   };
-  // p.windowResized = function () {
-  //   canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
-  //   pageHeight = p.select("body").height;
-  //   img.resize(p.windowWidth, pageHeight);
-  //   console.log("window resized!");
-  // };
-  // calculateHeight = function () {
-  //   let halfh = p.windowHeight / 2;
-  //   let h = p.windowHeight / halfh;
-  //   return h + heightOffset;
-  // };
 }
 
 function background(p) {
   p.preload = function () {
     shaderExperiment = p.loadShader(
-      "assets/sketch/shader_experiment.vert",
-      "assets/sketch/shader_experiment.frag"
+      "/me/assets/sketch/shader_experiment.vert",
+      "/me/assets/sketch/shader_experiment.frag"
     );
   };
   p.setup = function () {
-    backgroundImageTest = p.loadImage("assets/images/weave1.jpg");
+    backgroundImageTest = p.loadImage("/me/assets/images/weave1.jpg");
     canvas3 = p
       .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
       .parent("pfive-container");
@@ -296,7 +293,7 @@ particlebackground = function (p) {
   let particles = [];
   let res = 12;
   p.preload = function () {
-    img = p.loadImage("assets/images/18.jpg"); //17!
+    img = p.loadImage("/me/assets/images/18.jpg"); //17!
   };
   p.setup = function () {
     canvas4 = p

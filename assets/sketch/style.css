@@ -26,7 +26,7 @@ body {
   font: 400 16px/1.5 -apple-system, "Google Sans Code",  BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: none;
   /* background-color: #fdfdfd; */
-  /* background-color: pink !important; */
+  background-color: #FFE8CE !important;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
   -moz-font-feature-settings: "kern" 1;
@@ -36,15 +36,11 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  /* animation: fadeInAnimation ease 5s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards; */
 }
 
 .loader{
   display:flex;
   align-self:center;
-  /* justify-self: center; */
   top:300px;
     animation: fadeOutAnimation ease 2s;
   animation-iteration-count: 1;
