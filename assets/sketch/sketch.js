@@ -11,7 +11,7 @@ let canvas1;
 let canvas2;
 let canvas3;
 let canvas4;
-let pageHeight = 100;
+let pageHeight = 1000;
 let heightOffset = 300; // 170
 let canvasSize = 400;
 let particles;
@@ -39,9 +39,7 @@ function s1(p) {
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
     canvas1.style("z-index", "-2");
-    // canvas1.style("box-shadow", "10px 10px");
-
-    canvas1.position(p.windowWidth / 2 + 100, calculateHeight());
+    canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
 
     let openpost = p.select(".openpost-class");
     if (openpost) {
@@ -54,18 +52,11 @@ function s1(p) {
     if (postShowingvar) {
       p.remove();
     }
-    //p.background(255, 192, 203);
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
-    //p.orbitControl();
     p.translate(0, -40, 0);
     p.rotateY(p.frameCount * 0.001);
     p.sphere(120, 20, 10);
-  };
-  calculateHeight = function () {
-    let halfh = p.windowHeight / 2;
-    let h = p.windowHeight / halfh;
-    return h + heightOffset;
   };
 }
 function s2(p) {
@@ -119,31 +110,31 @@ function s2(p) {
       // //p5container.style("background", "red");
       // p5container.style("box-shadow", "20px 20px");
 
-      canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+      canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
     }
   };
   p.draw = function () {
     if (!postShowingvar) {
       if (currentImage) {
         p.tint(255, 255);
-        canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+        canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
         p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
       } else {
         p.tint(255, 0);
       }
     }
   };
-  p.windowResized = function () {
-    canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
-    img.resize(p.windowWidth, pageHeight);
-
-    console.log("window resized!");
-  };
-  calculateHeight = function () {
-    let halfh = p.windowHeight / 2;
-    let h = p.windowHeight / halfh;
-    return h + heightOffset;
-  };
+  // p.windowResized = function () {
+  //   canvas2.position(p.windowWidth / 2 + 100, calculateHeight());
+  //   pageHeight = p.select("body").height;
+  //   img.resize(p.windowWidth, pageHeight);
+  //   console.log("window resized!");
+  // };
+  // calculateHeight = function () {
+  //   let halfh = p.windowHeight / 2;
+  //   let h = p.windowHeight / halfh;
+  //   return h + heightOffset;
+  // };
 }
 
 function background(p) {
@@ -169,6 +160,12 @@ function background(p) {
     shaderExperiment.setUniform("background", backgroundImageTest);
   };
 }
+
+calculateHeight = function (p) {
+  let halfh = p.windowHeight / 2;
+  let h = p.windowHeight / halfh;
+  return h + heightOffset;
+};
 
 drawRandomCircle = function (titleid) {
   let path = imageMap.get(titleid);
@@ -242,7 +239,6 @@ function addPictureColors() {
 }
 
 function getReadableContrastColor(baseHex, palette) {
-  console.log("pallette: ", palette);
   function luminance(r, g, b) {
     let a = [r, g, b].map((v) => {
       v /= 255;
@@ -279,7 +275,6 @@ function getReadableContrastColor(baseHex, palette) {
   let bestColor = null;
   let bestContrast = 0;
 
-  console.log("pallette: ", palette);
   for (let color of palette) {
     let cRatio = contrast(baseHex, color);
     if (cRatio > bestContrast && cRatio >= 4.5) {
@@ -294,21 +289,19 @@ function getReadableContrastColor(baseHex, palette) {
 particlebackground = function (p) {
   let particles = [];
   let res = 12;
-
   p.preload = function () {
     img = p.loadImage("assets/images/18.jpg"); //17!
   };
   p.setup = function () {
-    determineHeadlineColor(p, img);
     canvas4 = p
-      .createCanvas(p.windowWidth, p.windowHeight)
+      .createCanvas(p.windowWidth, pageHeight)
       .parent("pfive-container-background");
     canvas4.position(0, 0);
     canvas4.style("z-index", "-3");
     placeParticles();
     p.noStroke();
-
-    img.resize(p.windowWidth, pageHeight);
+    img.resize(p.windowWidth, pageHeight); // pageHeight
+    determineHeadlineColor(p, img);
   };
   p.draw = function () {
     paintParticles();
@@ -320,10 +313,12 @@ particlebackground = function (p) {
     }
   };
   p.windowResized = function () {
-    canvas1.position(p.windowWidth / 2 + 100, calculateHeight);
+    p.resizeCanvas(p.windowWidth, pageHeight);
+    canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
     determineHeadlineColor(p, img);
     img.resize(p.windowWidth, pageHeight);
     paintParticles();
+    p.updatePixels();
     console.log("window resized!");
   };
 
