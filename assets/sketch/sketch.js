@@ -54,7 +54,9 @@ function s1(p) {
   };
   p.draw = function () {
     if (postShowingvar) {
-      p.remove();
+      canvas1.style("opacity", "0%");
+    } else {
+      canvas1.style("opacity", "100%");
     }
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
@@ -123,8 +125,10 @@ function s2(p) {
         p.tint(255, 255);
         canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
         p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
+        canvas2.style("opacity", "100%");
       } else {
-        p.tint(255, 0);
+        //p.tint(255, 0);
+        canvas2.style("opacity", "0%");
       }
     }
   };
@@ -367,10 +371,10 @@ particlebackground = function (p) {
       //let mouseF = this.p.map(mouseD, 0, 100, 10, 0);
       let homeF = this.p.map(homeD, 0, 100, 0, 10);
 
-      let vx = (this.p.cos(mouseA) * mouseF) / 8;
+      let vx = (this.p.cos(mouseA) * mouseF) / 4;
       vx += this.p.cos(homeA) * homeF;
 
-      let vy = (this.p.sin(mouseA) * mouseF) / 8;
+      let vy = (this.p.sin(mouseA) * mouseF) / 4;
       vy += this.p.sin(homeA) * homeF;
 
       this.x += vx;
