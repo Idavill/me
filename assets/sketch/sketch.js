@@ -29,6 +29,7 @@ let previewImageSize = 390;
 let postShowingvar = true;
 let siteHeaderHtml;
 let bodyHtml;
+let siteTitleHtml;
 
 let backgroundImageTest;
 let testheadline1;
@@ -45,7 +46,7 @@ function s1(p) {
     canvas1 = p
       .createCanvas(canvasSize, canvasSize, p.WEBGL)
       .parent("pfive-container");
-    canvas1.style("z-index", "-2");
+    canvas1.style("z-index", "2");
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
     dropShadow = p.select(".drop-shadow");
     dropShadow.position(p.windowWidth / 2 + 100, calculateHeight(p));
@@ -120,7 +121,7 @@ function s2(p) {
       canvas2 = p
         .createCanvas(canvasSize, canvasSize)
         .parent("pfive-container");
-      canvas2.style("z-index", "-2");
+      canvas2.style("z-index", "2");
       canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
     }
   };
@@ -186,8 +187,6 @@ determineHeadlineColor = function (p, img) {
   sitetitle = p.select(".site-title");
   about = p.select(".page-link");
   social = p.select(".social-media-list");
-  // console.log("span username :", span);
-
   determineColor(p, sitetitle);
   determineColor(p, about);
   determineColor(p, social);
@@ -312,15 +311,18 @@ particlebackground = function (p) {
     backgroundhtml.style("z-index", "-3");
     siteHeaderHtml = p.select(".site-header");
     bodyHtml = p.select(".body");
+    siteTitleHtml = p.select(".site-title");
   };
   p.draw = function () {
     paintParticles();
     if (postShowingvar) {
       siteHeaderHtml.style("position", "fixed");
       bodyHtml.style("overflow", "hidden");
+      //console.log("site title: ", siteTitleHtml);
     } else {
       siteHeaderHtml.style("position", "relative");
       bodyHtml.style("overflow", "auto");
+      //siteHeaderHtml.elt.textContent = "Ida Villadsen";
     }
   };
   paintParticles = function () {
