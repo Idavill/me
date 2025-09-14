@@ -27,6 +27,8 @@ let currentGraphics = null;
 let currentImage = null;
 let previewImageSize = 390;
 let postShowingvar = true;
+let siteHeaderHtml;
+let bodyHtml;
 
 let backgroundImageTest;
 let testheadline1;
@@ -305,9 +307,21 @@ particlebackground = function (p) {
     p.noStroke();
     img.resize(p.windowWidth, pageHeight); // pageHeight
     determineHeadlineColor(p, img);
+    let backgroundhtml = p.select("#pfive-container-background");
+    backgroundhtml.style("position", "fixed");
+    backgroundhtml.style("z-index", "-3");
+    siteHeaderHtml = p.select(".site-header");
+    bodyHtml = p.select(".body");
   };
   p.draw = function () {
     paintParticles();
+    if (postShowingvar) {
+      siteHeaderHtml.style("position", "fixed");
+      bodyHtml.style("overflow", "hidden");
+    } else {
+      siteHeaderHtml.style("position", "relative");
+      bodyHtml.style("overflow", "auto");
+    }
   };
   paintParticles = function () {
     for (let i = 0; i < particles.length; i++) {
