@@ -45,7 +45,7 @@ body {
 .loader{
   display:flex;
   align-self:center;
-  top:300px;
+  top:300vh;
     animation: fadeOutAnimation ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -162,7 +162,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 0px solid black;
   border-radius: 5px;
   z-index: 1;
-  right:250px;
+  right:250vw;
 }
 
 /**
@@ -172,7 +172,7 @@ a {
   /* color: none; */
   text-decoration: none;
   background-color: none;
-  width:370px;
+  width:25vw;
   border: none ;
   border-radius: none;
   padding-left: 20px;
@@ -309,7 +309,7 @@ table td {
   border-bottom: none !important;
   min-height: 55.95px;
   position: relative;
-  padding-top:50px;
+  padding-top:5vh;
   width:100%;
 }
 
@@ -475,7 +475,7 @@ table td {
  * Page content
  */
 .page-content {
-  padding: 80px 0;
+  padding: 40px 0;
   overflow: hidden;
 }
 
@@ -501,7 +501,7 @@ table td {
   mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0.5%);
   max-width: calc(100% - 60px); /* Leaves 30px padding on each side */
   position: relative;
-  margin-top: 120px; /* space below header */
+  margin-top: 25vh; /* space below header */
   height: calc(100vh - 120px); /* limit scroll area */
   overflow-y: auto;
 }
@@ -511,12 +511,12 @@ table td {
   backdrop-filter: blur(10px);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0.5%);
   mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0.5%);
-  max-width: calc(100% - 400px);
+  max-width: calc(100% - 10vw);
   /* max-width: 500px;  */
   position: relative;
-  margin-top: 120px; /* space below header */
+  margin-top: 10vh; /* space below header */
   height: 300px; /* limit scroll area */
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 /* Optional: Add a media query for very large screens */
