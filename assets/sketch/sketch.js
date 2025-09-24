@@ -45,7 +45,11 @@ let palette = ["#3c93eaff", "#ffaf25ff", "#ff60ffff", "#1c2dbeff"];
 function s1(p) {
   p.setup = function () {
     canvas1 = p
-      .createCanvas(canvasSize, canvasSize, p.WEBGL)
+      .createCanvas(
+        p.select(".drop-shadow").width,
+        p.select(".drop-shadow").height,
+        p.WEBGL
+      )
       .parent("responsive-container");
     canvas1.style("display", "flex");
     canvas1.style("position", "absolute");
@@ -120,7 +124,10 @@ function s2(p) {
       pageHeight = p.select("body").height;
       pageWidth = p.select("body").width;
       canvas2 = p
-        .createCanvas(canvasSize, canvasSize)
+        .createCanvas(
+          p.select(".drop-shadow").width,
+          p.select(".drop-shadow").height
+        )
         .parent("responsive-container");
       canvas2.style("z-index", "2");
       canvas2.style("display", "flex");
