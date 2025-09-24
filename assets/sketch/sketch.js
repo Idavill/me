@@ -39,6 +39,7 @@ let dropShadow;
 
 let opacity = 0;
 let transitioning = false;
+let generalMargin = 40;
 
 let palette = ["#3c93eaff", "#ffaf25ff", "#ff60ffff", "#1c2dbeff"];
 
@@ -53,8 +54,8 @@ function s1(p) {
       .parent("responsive-container");
     canvas1.style("display", "flex");
     canvas1.style("position", "absolute");
-    canvas1.style("top", "0");
-    canvas1.style("left", "0");
+    canvas1.style("top", `${generalMargin}px`);
+    canvas1.style("left", `${generalMargin}px`);
     dropShadow = p.select(".drop-shadow");
 
     let openpost = p.select(".openpost-class");
@@ -76,7 +77,7 @@ function s1(p) {
     p.ambientLight(c);
     p.translate(0, 0, 0); // -04 y
     p.rotateY(p.frameCount * 0.003);
-    p.sphere(120, 20, 10);
+    p.sphere(90, 10, 10);
   };
 }
 function s2(p) {
@@ -132,8 +133,8 @@ function s2(p) {
       canvas2.style("z-index", "2");
       canvas2.style("display", "flex");
       canvas2.style("position", "absolute");
-      canvas2.style("top", "0");
-      canvas2.style("left", "0");
+      canvas2.style("top", `${generalMargin}px`);
+      canvas2.style("left", `${generalMargin}px`);
     }
   };
   p.draw = function () {
@@ -147,156 +148,6 @@ function s2(p) {
       }
     }
   };
-}
-
-function background(p) {
-  p.preload = function () {
-    shaderExperiment = p.loadShader(
-      "/me/assets/sketch/shader_experiment.vert",
-      "/me/assets/sketch/shader_experiment.frag"
-    );
-  };
-  p.setup = function () {
-    backgroundImageTest = p.loadImage("/me/assets/images/weave1.jpg");
-    canvas3 = p
-      .createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
-      .parent("pfive-container");
-    canvas3.position(0, 0);
-    canvas3.style("z-index", "-2");
-    p.shader(shaderExperiment);
-    p.noStroke();
-  };
-  p.draw = function () {
-    p.clear();
-    p.rect(0, 0, p.windowWidth, p.windowHeight);
-    shaderExperiment.setUniform("background", backgroundImageTest);
-  };
-}
-
-calculateHeight = function (p) {
-  let halfh = p.windowHeight / 2;
-  let h = p.windowHeight / halfh;
-  return h + heightOffset;
-};
-
-drawRandomCircle = function (titleid) {
-  let path = imageMap.get(titleid);
-  console.log(path, titleid);
-  if (titleid === "/jekyll/update/2025/09/06/ideadots") {
-    currentGraphics = path;
-    currentImage = null;
-  } else {
-    currentImage = path;
-    currentGraphics = null;
-  }
-};
-
-determineHeadlineColor = function (p, img) {
-  postlink = p.selectAll(".post-link");
-  sitetitle = p.select(".site-title");
-  about = p.select(".page-link");
-  social = p.select(".social-media-list");
-  determineColor(p, sitetitle);
-  determineColor(p, about);
-  determineColor(p, social);
-
-  if (postlink !== undefined) {
-    postlink.forEach((elm) => {
-      determineColor(p, elm);
-    });
-  }
-
-  social.style("width", "150px");
-  social.style("padding", "10px");
-  about.style("padding", "10px");
-  about.style("width", "150px");
-};
-
-determineColor = function (p, element) {
-  //addPictureColors();
-  colorOffset = 0;
-  elementHtml = element.elt.getBoundingClientRect();
-  x = (elementHtml.x / p.windowWidth) * img.width;
-  y = (elementHtml.y / p.windowHeight) * img.height;
-  pureColor = img.get(x + colorOffset, y);
-  color = `rgb(${pureColor})`;
-  element.style("background", color);
-  element.style("border", `border: 2px solid ${color}`);
-  element.style("border-radius", "5px");
-  element.style("box-shadow", "10px 10px");
-  hexcolor =
-    "#" +
-    ((1 << 24) | (pureColor[0] << 16) | (pureColor[1] << 8) | pureColor[2])
-      .toString(16)
-      .slice(1);
-
-  readbleContrastingColor = getReadableContrastColor(hexcolor, palette);
-  element.style("color", `${readbleContrastingColor}`);
-};
-
-function convertToHex(r, g, b) {
-  return (hexcolor =
-    "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1));
-}
-
-function addPictureColors() {
-  let a = img.get(0, 0);
-  let b = img.get(100, 100);
-  let c = img.get(500, 500);
-
-  let a1 = convertToHex(a[0] / 2, a[1] / 2, a[2] / 2);
-  let b1 = convertToHex(b[0] / 2, b[1] / 2, b[2] / 2);
-  let c1 = convertToHex(c[0] / 2, c[1] / 2, c[2] / 2);
-
-  palette.push(a1, b1, c1);
-}
-
-function getReadableContrastColor(baseHex, palette) {
-  function luminance(r, g, b) {
-    let a = [r, g, b].map((v) => {
-      v /= 255;
-      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-    });
-    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
-  }
-
-  function contrast(hex1, hex2) {
-    let rgb1 = hexToRgb(hex1);
-    let rgb2 = hexToRgb(hex2);
-    let lum1 = luminance(rgb1.r, rgb1.g, rgb1.b);
-    let lum2 = luminance(rgb2.r, rgb2.g, rgb2.b);
-    let brightest = Math.max(lum1, lum2);
-    let darkest = Math.min(lum1, lum2);
-    return (brightest + 0.05) / (darkest + 0.05);
-  }
-
-  function hexToRgb(hex) {
-    hex = hex.replace("#", "");
-    if (hex.length === 3)
-      hex = hex
-        .split("")
-        .map((c) => c + c)
-        .join("");
-    let bigint = parseInt(hex, 16);
-    return {
-      r: (bigint >> 16) & 255,
-      g: (bigint >> 8) & 255,
-      b: bigint & 255,
-    };
-  }
-
-  let bestColor = null;
-  let bestContrast = 0;
-
-  for (let color of palette) {
-    let cRatio = contrast(baseHex, color);
-    if (cRatio > bestContrast && cRatio >= 4.5) {
-      bestContrast = cRatio;
-      bestColor = color;
-    }
-  }
-
-  return bestColor; //|| "#000"; // fallback
 }
 
 particlebackground = function (p) {
@@ -410,3 +261,134 @@ particlebackground = function (p) {
 new p5(particlebackground);
 new p5(s1);
 new p5(s2);
+
+calculateHeight = function (p) {
+  let halfh = p.windowHeight / 2;
+  let h = p.windowHeight / halfh;
+  return h + heightOffset;
+};
+
+drawRandomCircle = function (titleid) {
+  let path = imageMap.get(titleid);
+  console.log(path, titleid);
+  if (titleid === "/jekyll/update/2025/09/06/ideadots") {
+    currentGraphics = path;
+    currentImage = null;
+  } else {
+    currentImage = path;
+    currentGraphics = null;
+  }
+};
+
+determineHeadlineColor = function (p, img) {
+  postlink = p.selectAll(".post-link");
+  sitetitle = p.select(".site-title");
+  about = p.select(".page-link");
+  social = p.select(".social-media-list");
+  determineColor(p, sitetitle);
+  determineColor(p, about);
+  determineColor(p, social);
+
+  if (postlink !== undefined) {
+    postlink.forEach((elm) => {
+      determineColor(p, elm);
+    });
+  }
+
+  social.style("width", "150px");
+  social.style("padding", "10px");
+  about.style("padding", "10px");
+  about.style("width", "150px");
+};
+
+determineColor = function (p, element) {
+  colorOffset = 0;
+  elementHtml = element.elt.getBoundingClientRect();
+  x = (elementHtml.x / p.windowWidth) * img.width;
+  y = (elementHtml.y / p.windowHeight) * img.height;
+  pureColor = img.get(x + colorOffset, y);
+
+  // default color if no color exist
+  if (pureColor[0] === 0 && pureColor[1] === 0 && pureColor[2] === 0) {
+    pureColor = [255, 192, 203, 0.9];
+  }
+
+  color = `rgb(${pureColor})`;
+  element.style("background", color);
+  element.style("border", `border: 2px solid ${color}`);
+  element.style("border-radius", "5px");
+  element.style("box-shadow", "10px 10px");
+  hexcolor =
+    "#" +
+    ((1 << 24) | (pureColor[0] << 16) | (pureColor[1] << 8) | pureColor[2])
+      .toString(16)
+      .slice(1);
+
+  readbleContrastingColor = getReadableContrastColor(hexcolor, palette);
+  element.style("color", `${readbleContrastingColor}`);
+};
+
+function convertToHex(r, g, b) {
+  return (hexcolor =
+    "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1));
+}
+
+function addPictureColors() {
+  let a = img.get(0, 0);
+  let b = img.get(100, 100);
+  let c = img.get(500, 500);
+
+  let a1 = convertToHex(a[0] / 2, a[1] / 2, a[2] / 2);
+  let b1 = convertToHex(b[0] / 2, b[1] / 2, b[2] / 2);
+  let c1 = convertToHex(c[0] / 2, c[1] / 2, c[2] / 2);
+
+  palette.push(a1, b1, c1);
+}
+
+function getReadableContrastColor(baseHex, palette) {
+  function luminance(r, g, b) {
+    let a = [r, g, b].map((v) => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+
+  function contrast(hex1, hex2) {
+    let rgb1 = hexToRgb(hex1);
+    let rgb2 = hexToRgb(hex2);
+    let lum1 = luminance(rgb1.r, rgb1.g, rgb1.b);
+    let lum2 = luminance(rgb2.r, rgb2.g, rgb2.b);
+    let brightest = Math.max(lum1, lum2);
+    let darkest = Math.min(lum1, lum2);
+    return (brightest + 0.05) / (darkest + 0.05);
+  }
+
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    if (hex.length === 3)
+      hex = hex
+        .split("")
+        .map((c) => c + c)
+        .join("");
+    let bigint = parseInt(hex, 16);
+    return {
+      r: (bigint >> 16) & 255,
+      g: (bigint >> 8) & 255,
+      b: bigint & 255,
+    };
+  }
+
+  let bestColor = null;
+  let bestContrast = 0;
+
+  for (let color of palette) {
+    let cRatio = contrast(baseHex, color);
+    if (cRatio > bestContrast && cRatio >= 4.5) {
+      bestContrast = cRatio;
+      bestColor = color;
+    }
+  }
+
+  return bestColor; //|| "#000"; // fallback
+}
