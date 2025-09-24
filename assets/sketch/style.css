@@ -256,7 +256,7 @@ pre > code {
   margin-top:50px;
   padding-right: none;
   padding-left: none;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 @media screen and (max-width: 800px) {
   .wrapper {
@@ -427,6 +427,7 @@ table td {
  * Site footer
  */
 .site-footer {
+  display:flex;
   border-top: none;
   padding: 0px 0;
   margin-bottom:100px;
@@ -495,7 +496,7 @@ table td {
  * Page content
  */
 .page-content {
-  padding: 80px 0;
+  padding: 20px 0;
   overflow: hidden;
 }
 

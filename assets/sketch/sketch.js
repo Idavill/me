@@ -300,47 +300,32 @@ particlebackground = function (p) {
   };
   p.setup = function () {
     canvas4 = p
-      .createCanvas(pageWidth, pageHeight)
+      .createCanvas(p.windowWidth, pageHeight)
       .parent("pfive-container-background");
     canvas4.position(0, 0);
     canvas4.style("z-index", "-3");
     placeParticles();
     p.noStroke();
-    img.resize(pageWidth, pageHeight); // pageHeight
+    img.resize(p.windowWidth, pageHeight); // pageHeight
     determineHeadlineColor(p, img);
 
     let backgroundhtml = p.select("#pfive-container-background");
     backgroundhtml.style("position", "fixed");
     backgroundhtml.style("top", "0");
 
-    // let allContenthtml = p.select("#all-contet");
-    // allContenthtml.styke("position", "absolute");
-    // allContenthtml.styke("z-index", "1");
-
     backgroundhtml.style("z-index", "-3");
     siteHeaderHtml = p.select(".site-header");
     bodyHtml = p.select(".body");
     siteTitleHtml = p.select(".site-title");
-
-    document.body.childNodes.forEach((node) => {
-      if (
-        node.nodeType === Node.TEXT_NODE &&
-        node.textContent.includes("&nbssp;")
-      ) {
-        node.remove();
-      }
-    });
   };
   p.draw = function () {
     paintParticles();
     if (postShowingvar) {
       siteHeaderHtml.style("position", "fixed");
       bodyHtml.style("overflow", "hidden");
-      //console.log("site title: ", siteTitleHtml);
     } else {
       siteHeaderHtml.style("position", "static");
       bodyHtml.style("overflow", "auto");
-      //siteHeaderHtml.elt.textContent = "Ida Villadsen";
     }
   };
   paintParticles = function () {
