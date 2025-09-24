@@ -294,7 +294,7 @@ particlebackground = function (p) {
   let particles = [];
   let res = 12;
   p.preload = function () {
-    img = p.loadImage("/me/assets/images/18.jpg"); //17!
+    img = p.loadImage("/me/assets/images/18.2.jpeg"); //17!
   };
   p.setup = function () {
     canvas4 = p
@@ -312,6 +312,15 @@ particlebackground = function (p) {
     siteHeaderHtml = p.select(".site-header");
     bodyHtml = p.select(".body");
     siteTitleHtml = p.select(".site-title");
+
+    document.body.childNodes.forEach((node) => {
+      if (
+        node.nodeType === Node.TEXT_NODE &&
+        node.textContent.includes("&nbssp;")
+      ) {
+        node.remove();
+      }
+    });
   };
   p.draw = function () {
     paintParticles();

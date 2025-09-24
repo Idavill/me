@@ -22,9 +22,19 @@ dl, dd, ol, ul, figure {
 /**
  * Basic styling
  */
+head{
+  position:absolute;
+  z-index:-3;
+  margin:0;
+  padding:0;
+}
+
+
 body {
+  position:absolute;
   font: 400 16px/1.5 -apple-system, "Google Sans Code",  BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: none;
+  top:0px;
   /* background-color: #fdfdfd; */
   background-color: #FFE8CE !important;
   -webkit-text-size-adjust: 100%;
@@ -36,6 +46,8 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  margin:0;
+  padding:0;
 }
 
 /* .pfive-container-background{
