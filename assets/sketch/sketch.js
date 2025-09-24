@@ -51,13 +51,7 @@ function s1(p) {
     canvas1.style("position", "absolute");
     canvas1.style("top", "0");
     canvas1.style("left", "0");
-    //canvas1.style("z-index", "2");
-    //canvas1.style("height", "inherit");
-    //canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
     dropShadow = p.select(".drop-shadow");
-    //dropShadow.style("display", "flex");
-    //dropShadow.style("height", "100px");
-    //dropShadow.position(p.windowWidth / 2 + 100, calculateHeight(p));
 
     let openpost = p.select(".openpost-class");
     if (openpost) {
@@ -76,11 +70,9 @@ function s1(p) {
     }
     let c = p.color(255, 150, 203);
     p.ambientLight(c);
-    //p.spotLight(100, 100, 0);
     p.translate(0, 0, 0); // -04 y
     p.rotateY(p.frameCount * 0.003);
     p.sphere(120, 20, 10);
-    //p.sphere.computeNormals();
   };
 }
 function s2(p) {
@@ -135,18 +127,15 @@ function s2(p) {
       canvas2.style("position", "absolute");
       canvas2.style("top", "0");
       canvas2.style("left", "0");
-      //canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
     }
   };
   p.draw = function () {
     if (!postShowingvar) {
       if (currentImage) {
         p.tint(255, 255);
-        //canvas2.position(p.windowWidth / 2 + 100, calculateHeight(p));
         p.image(currentImage, 0, 0, previewImageSize, previewImageSize);
         canvas2.style("opacity", "100%");
       } else {
-        //p.tint(255, 0);
         canvas2.style("opacity", "0%");
       }
     }
@@ -169,9 +158,6 @@ function background(p) {
     canvas3.style("z-index", "-2");
     p.shader(shaderExperiment);
     p.noStroke();
-
-    // let test = p.select("#defaultCanvas2");
-    // test.style("padding", "100px");
   };
   p.draw = function () {
     p.clear();
@@ -350,10 +336,6 @@ particlebackground = function (p) {
   };
   p.windowResized = function () {
     p.resizeCanvas(pageWidth, pageHeight);
-    //canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
-    //dropShadow.position(p.windowWidth / 2 + 100, calculateHeight(p));
-    // dropShadow.style("height", `${p.windowWidth / 2}`);
-    //dropShadow.resize(p.windowWidth / 2 + 100, calculateHeight(p));
     determineHeadlineColor(p, img);
     img.resize(pageWidth, pageHeight);
     paintParticles();
