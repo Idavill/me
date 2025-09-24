@@ -31,6 +31,7 @@ head{
 
 
 body {
+  display:flex;
   position:absolute;
   font: 400 16px/1.5 -apple-system, "Google Sans Code",  BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: none;
@@ -45,6 +46,7 @@ body {
   font-kerning: normal;
   display: flex;
   min-height: 100vh;
+  width:100%;
   flex-direction: column;
   margin:0;
   padding:0;
@@ -245,13 +247,16 @@ pre > code {
  * Wrapper
  */
 .wrapper {
-  max-width: -webkit-calc(1200px - (30px * 2));
-  max-width: calc(1200px - 30px * 2);
+  display:flex;
+  /* max-width: -webkit-calc(1200px - (30px * 2)); */
+  /* max-width: calc(1200px - 30px * 2); */
+  width:100%;
   margin-left: 250px;
   margin-right: 250px;
   margin-top:50px;
   padding-right: none;
   padding-left: none;
+  justify-content: space-between;
 }
 @media screen and (max-width: 800px) {
   .wrapper {
@@ -317,15 +322,17 @@ table td {
  * Site header
  */
 .site-header {
+  display:flex;
+  /* align-self: center; */
   border-top: none !important;
   border-bottom: none !important;
   min-height: 55.95px;
-  position: relative;
-  padding-top:50px;
+  /* position: relative; */
   width:100%;
 }
 
 .site-title {
+  display:flex;
   color: none;
   font-size: 26px;
   font-weight: 300;
@@ -342,6 +349,7 @@ table td {
 }
 
 .site-nav {
+  display:flex;
   float: right;
   line-height: 54px;
   position: relative;

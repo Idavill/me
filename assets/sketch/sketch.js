@@ -12,6 +12,7 @@ let canvas2;
 let canvas3;
 let canvas4;
 let pageHeight = 1000;
+let pageWidth = 1000;
 let heightOffset = 300; // 170
 let canvasSize = 400;
 let particles;
@@ -118,6 +119,7 @@ function s2(p) {
     if (!postShowingvar) {
       setImageMap();
       pageHeight = p.select("body").height;
+      pageWidth = p.select("body").width;
       canvas2 = p
         .createCanvas(canvasSize, canvasSize)
         .parent("pfive-container");
@@ -298,16 +300,23 @@ particlebackground = function (p) {
   };
   p.setup = function () {
     canvas4 = p
-      .createCanvas(p.windowWidth, pageHeight)
+      .createCanvas(pageWidth, pageHeight)
       .parent("pfive-container-background");
     canvas4.position(0, 0);
     canvas4.style("z-index", "-3");
     placeParticles();
     p.noStroke();
-    img.resize(p.windowWidth, pageHeight); // pageHeight
+    img.resize(pageWidth, pageHeight); // pageHeight
     determineHeadlineColor(p, img);
+
     let backgroundhtml = p.select("#pfive-container-background");
     backgroundhtml.style("position", "fixed");
+    backgroundhtml.style("top", "0");
+
+    // let allContenthtml = p.select("#all-contet");
+    // allContenthtml.styke("position", "absolute");
+    // allContenthtml.styke("z-index", "1");
+
     backgroundhtml.style("z-index", "-3");
     siteHeaderHtml = p.select(".site-header");
     bodyHtml = p.select(".body");
@@ -329,7 +338,7 @@ particlebackground = function (p) {
       bodyHtml.style("overflow", "hidden");
       //console.log("site title: ", siteTitleHtml);
     } else {
-      siteHeaderHtml.style("position", "relative");
+      siteHeaderHtml.style("position", "static");
       bodyHtml.style("overflow", "auto");
       //siteHeaderHtml.elt.textContent = "Ida Villadsen";
     }
@@ -341,11 +350,11 @@ particlebackground = function (p) {
     }
   };
   p.windowResized = function () {
-    p.resizeCanvas(p.windowWidth, pageHeight);
+    p.resizeCanvas(pageWidth, pageHeight);
     canvas1.position(p.windowWidth / 2 + 100, calculateHeight(p));
     dropShadow.position(p.windowWidth / 2 + 100, calculateHeight(p));
     determineHeadlineColor(p, img);
-    img.resize(p.windowWidth, pageHeight);
+    img.resize(pageWidth, pageHeight);
     paintParticles();
     p.updatePixels();
     console.log("window resized!");
