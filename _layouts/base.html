@@ -17,14 +17,18 @@
        <div id="pfive-container-background"></div>
       {%- include header.html -%}
       
-      <main class="page-content" aria-label="Content">
+      <main id="page-content" class="page-content" aria-label="Content">
         <div class="script">
   
         </div>
-                <div class="drop-shadow"></div>
-  
+        
         <div class="wrapper">
-          {{ content }}
+          <div>
+            {{ content }}
+          </div>
+          <div id="responsive-container" >
+            <div class="drop-shadow"></div>
+          </div>
         </div>
       </main>
       
