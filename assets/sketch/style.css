@@ -197,6 +197,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 0; */
   min-width: 300px;
   min-height: 300px;
+  max-height:500px;
   border: none;
 }
 
@@ -274,6 +275,7 @@ pre > code {
   justify-content: space-between;
   /* max-width: -webkit-calc(1200px - (30px * 2)); */
   max-width: calc(1200px - 30px * 2);
+  max-height: calc(500px - 30px * 2);
   /* width:100%; */
   margin-left: 250px;
   /* margin-right: 250px; */
@@ -282,12 +284,21 @@ pre > code {
   padding-left: none;
   /* justify-content: space-between; */
 }
-#responsive-container{
+/* #responsive-container{
   position: relative;
   width: 50%;
-  height: 50%;
-  /* overflow: hidden; */
+  height:50%;
   padding-top: 56.25%; /* 16:9 Aspect Ratio */
+
+#responsive-container{
+    position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%; /* or a % of wrapper */
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 800px) {
