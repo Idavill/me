@@ -381,6 +381,8 @@ table td {
 .site-header {
   float: left;
   display:flex;
+  position:absolute;
+  z-index: 999;
   /* align-self: center; */
   border-top: none !important;
   border-bottom: none !important;
@@ -615,6 +617,8 @@ table td {
   mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0.5%);
   max-width: calc(100% - 60px); 
   position: relative;
+  /* position: absolute; */
+    /* z-index: -1; */
   margin-top: 120px; /* space below header */
   height: calc(100vh - 120px); /* limit scroll area */
   overflow-y: auto;
