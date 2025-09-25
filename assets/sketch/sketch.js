@@ -31,6 +31,7 @@ let postShowingvar = true;
 let siteHeaderHtml;
 let bodyHtml;
 let siteTitleHtml;
+let responsiveContainer;
 
 let backgroundImageTest;
 let testheadline1;
@@ -167,6 +168,8 @@ particlebackground = function (p) {
     img.resize(p.windowWidth, pageHeight); // pageHeight
     determineHeadlineColor(p, img);
 
+    responsiveContainer = p.select("#responsive-container");
+
     let backgroundhtml = p.select("#pfive-container-background");
     backgroundhtml.style("position", "fixed");
     backgroundhtml.style("top", "0");
@@ -181,9 +184,11 @@ particlebackground = function (p) {
     if (postShowingvar) {
       siteHeaderHtml.style("position", "fixed");
       bodyHtml.style("overflow", "hidden");
+      responsiveContainer.style("width", "0%");
     } else {
       siteHeaderHtml.style("position", "static");
       bodyHtml.style("overflow", "auto");
+      responsiveContainer.style("width", "100%");
     }
   };
   paintParticles = function () {

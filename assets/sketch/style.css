@@ -377,7 +377,7 @@ table td {
  @media screen and (max-width: 800px) {
   .site-title, .site-nav {
     /* margin-top:var(--footer-margin); */
-    width: 60%; /* The width is 100%, when the viewport is 800px or smaller */
+    /* width: 100%; The width is 100%, when the viewport is 800px or smaller */
   }
 }
 .site-header {
@@ -542,7 +542,8 @@ table td {
   list-style: none;
   /* margin-top:var(--footer-margin); */
   text-decoration: none;
-  margin-left:100px;
+  margin-left:110px;
+  margin-right:110px;
 }
 .social-media-list:hover{
   color: var(--brat-green);
@@ -554,6 +555,7 @@ table td {
   color: #828282;
   margin-left: -15px;
   /* width:200px; */
+  justify-content: center;
   width:100%;
 }
 
@@ -561,6 +563,7 @@ table td {
   float: left;
   margin-bottom: 15px;
   padding-left: 15px;
+  width:370px;
 }
 
 .footer-col-1 {
@@ -620,6 +623,9 @@ table td {
 
 .scroll-boundary{
   /* Fade effect at the top */
+  height: 70vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
   backdrop-filter: blur(10px);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0.5%);
   mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0.5%);
@@ -628,7 +634,7 @@ table td {
   /* position: absolute; */
     /* z-index: -1; */
   margin-top: 120px; /* space below header */
-  height: calc(100vh - 120px); /* limit scroll area */
+  /* height: calc(100vh - 120px); limit scroll area */
   overflow-y: auto;
 }
 
@@ -641,7 +647,7 @@ table td {
   /* max-width: 500px;  */
   position: relative;
   /* margin-top: 120px;  */
-  margin:var(--between-wrapper-padding);
+  /* margin:var(--between-wrapper-padding); */
   height: 300px; /* limit scroll area */
   overflow-y: auto;
   width:fit-content;
@@ -657,7 +663,7 @@ table td {
 /* Responsive tweaks for smaller screens */
 @media screen and (max-width: 800px) {
   .post {
-    padding: 15px;
+    /* padding: 15px; */
     max-width: calc(100% - 30px); /* Leaves 15px padding on each side */
   }
 }
