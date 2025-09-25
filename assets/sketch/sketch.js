@@ -26,7 +26,7 @@ let img4;
 let img5;
 let currentGraphics = null;
 let currentImage = null;
-let previewImageSize = 390;
+let previewImageSize = 400;
 let postShowingvar = true;
 let siteHeaderHtml;
 let bodyHtml;
@@ -39,7 +39,7 @@ let dropShadow;
 
 let opacity = 0;
 let transitioning = false;
-let generalMargin = 40;
+let generalMargin = 0;
 
 let palette = ["#3c93eaff", "#ffaf25ff", "#ff60ffff", "#1c2dbeff"];
 
@@ -77,7 +77,7 @@ function s1(p) {
     p.ambientLight(c);
     p.translate(0, 0, 0); // -04 y
     p.rotateY(p.frameCount * 0.003);
-    p.sphere(90, 10, 10);
+    p.sphere(110, 10, 10);
   };
 }
 function s2(p) {
